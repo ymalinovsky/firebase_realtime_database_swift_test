@@ -29,20 +29,9 @@ class Firebase {
                 print(error!)
             }
             else {
-                print("login successful")
-            }
-        })
-    }
-    
-    func loginTestUser(email: String, password: String) {
-        Auth.auth().signIn(withEmail: email, password: password, completion: { (user, error) in
-            if error != nil {
-                print(error!)
-            }
-            else {
                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
                 let chatVC = storyboard.instantiateViewController(withIdentifier: "chatViewController") as! ChatViewController
-                
+                currentUser = email
                 self.loginVC.present(chatVC, animated: true)
             }
         })
@@ -50,7 +39,7 @@ class Firebase {
     
     func loginAnonymous() {
         Auth.auth().createUser(withEmail: App.testUsername, password: App.testPassword, completion: { (user, error) in
-            self.loginTestUser(email: App.testUsername, password: App.testPassword)
+            self.emailLogin(email: App.testUsername, password: App.testPassword)
         })
     }
     

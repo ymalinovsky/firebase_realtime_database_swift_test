@@ -12,3 +12,5 @@ struct App {
     static let testUsername = "test@test.com"
     static let testPassword = "test911"
 }
+
+var currentUser = String()
