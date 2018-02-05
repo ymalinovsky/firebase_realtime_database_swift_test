@@ -1,0 +1,8 @@
+.DS_Store
+.idea/
+
+Podfile.lock
+Pods/
+
+firebase_realtime_database_test.xcworkspace/
+
