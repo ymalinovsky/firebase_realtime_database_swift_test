@@ -26,13 +26,19 @@ class ChatViewController: UIViewController {
         firebase.chatVC = self
         
         currentUserLabel.text = currentUser
-        
-        firebase.addNewMessageObserver()
+        chat.prepareChatVCData(controller: self, chatID: chatID)
     }
 
     @IBAction func sendMessageButtonAction(_ sender: UIButton) {
         if let sender = currentUserLabel.text, let message = messageTextField.text {
             firebase.setMessage(sender: sender, message: message, chatID: 1)
+            
+            chat.addMessageToScrollView(controller: self, sender: sender, message: message)
+            
+            if messagesScrollView.contentSize.height > messagesScrollView.frame.size.height {
+                let bottomOffset = CGPoint(x: 0, y: messagesScrollView.contentSize.height - messagesScrollView.bounds.size.height)
+                messagesScrollView.setContentOffset(bottomOffset, animated: true)
+            }
         }
     }
     

@@ -23,6 +23,7 @@ class Firebase {
                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
                 let chatsNC = storyboard.instantiateViewController(withIdentifier: "chatsNavigationController")
                 currentUser = email
+                self.addNewMessageObserver()
                 
                 self.signInVC.present(chatsNC, animated: true)
             }
@@ -38,6 +39,7 @@ class Firebase {
                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
                 let chatsNC = storyboard.instantiateViewController(withIdentifier: "chatsNavigationController")
                 currentUser = email
+                self.addNewMessageObserver()
                 
                 self.loginVC.present(chatsNC, animated: true)
             }
@@ -78,19 +80,41 @@ class Firebase {
     }
     
     func addNewMessageObserver() {
-        let messageDB = Database.database().reference().child("messages")
+        let messageDB = Database.database().reference()
         
         messageDB.observe(.childAdded, with: { (snapshot) -> Void in
             if snapshot.hasChildren() {
-                let messageData = snapshot.value as! NSDictionary
-                if let message = messageData["message"], let sender = messageData["sender"] {
-                    self.chatVC.chat.addMessageToScrollView(controller: self.chatVC, sender: sender as! String, message: message as! String)
-                    
-                    if self.chatVC.messagesScrollView.contentSize.height > self.chatVC.messagesScrollView.frame.size.height {
-                        let bottomOffset = CGPoint(x: 0, y: self.chatVC.messagesScrollView.contentSize.height - self.chatVC.messagesScrollView.bounds.size.height)
-                        self.chatVC.messagesScrollView.setContentOffset(bottomOffset, animated: true)
+                let chatData = snapshot.value as! NSDictionary
+                let messagesData = chatData["messages"] as! NSDictionary
+                
+                for messageData in messagesData {
+                    let message = messageData.value as! NSDictionary
+                    if let sender = message["sender"], let message = message["message"] {
+                        if let chatID = Int(snapshot.key) {
+                            if chatsData != nil {
+                                if var chatMassages = chatsData[chatID] {
+                                    let massage = Massage(sender: String(describing: sender), message: String(describing: message))
+                                    chatMassages.append(massage)
+                                    
+                                    chatsData[chatID] = chatMassages
+                                } else {
+                                    chatsData = [chatID: [Massage(sender: String(describing: sender), message: String(describing: message))]]
+                                }
+                            } else {
+                                chatsData = [chatID: [Massage(sender: String(describing: sender), message: String(describing: message))]]
+                            }
+                        }
                     }
                 }
+                
+//                if let message = messageData["message"], let sender = messageData["sender"] {
+//                    self.chatVC.chat.addMessageToScrollView(controller: self.chatVC, sender: sender as! String, message: message as! String)
+//
+//                    if self.chatVC.messagesScrollView.contentSize.height > self.chatVC.messagesScrollView.frame.size.height {
+//                        let bottomOffset = CGPoint(x: 0, y: self.chatVC.messagesScrollView.contentSize.height - self.chatVC.messagesScrollView.bounds.size.height)
+//                        self.chatVC.messagesScrollView.setContentOffset(bottomOffset, animated: true)
+//                    }
+//                }
             }
         })
     }

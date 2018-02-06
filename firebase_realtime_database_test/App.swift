@@ -13,4 +13,13 @@ struct App {
     static let testPassword = "test911"
 }
 
+struct Massage {
+    let sender: String
+    let message: String
+}
+
 var currentUser = String()
+
+var chatsData: [Int: [Massage]]!
+
+
