@@ -12,7 +12,9 @@ class ChatsViewController: UIViewController, UITableViewDelegate, UITableViewDat
 
     @IBOutlet weak var tableView: UITableView!
     
-    let chats = [1, 2]
+    let firebase = Firebase()
+    
+    let chatIDs = [1, 2]
     
     let chatCellIdentifier = "chatsCell"
     let chatSegueIdentifier = "chatSegue"
@@ -24,6 +26,10 @@ class ChatsViewController: UIViewController, UITableViewDelegate, UITableViewDat
 
         tableView.delegate = self
         tableView.dataSource = self
+        
+        for chatID in chatIDs {
+            firebase.newMessageObserver(chatID: chatID)
+        }
     }
 
     // MARK: - Navigation
@@ -33,7 +39,7 @@ class ChatsViewController: UIViewController, UITableViewDelegate, UITableViewDat
         switch segue.identifier! {
         case chatSegueIdentifier:
             let chatVC = segue.destination as! ChatViewController
-            chatVC.chatID = chats[selectedIndexRow]
+            chatVC.chatID = chatIDs[selectedIndexRow]
         default:
             print("Unpredicted segue identifier.")
         }
@@ -42,13 +48,13 @@ class ChatsViewController: UIViewController, UITableViewDelegate, UITableViewDat
     // MARK: UITableViewDataSource
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return chats.count
+        return chatIDs.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: chatCellIdentifier)!
         
-        cell.textLabel?.text = String(chats[indexPath.row])
+        cell.textLabel?.text = String(chatIDs[indexPath.row])
         
         return cell
     }

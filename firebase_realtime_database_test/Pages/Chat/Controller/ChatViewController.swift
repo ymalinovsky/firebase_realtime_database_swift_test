@@ -31,7 +31,7 @@ class ChatViewController: UIViewController {
 
     @IBAction func sendMessageButtonAction(_ sender: UIButton) {
         if let sender = currentUserLabel.text, let message = messageTextField.text {
-            firebase.setMessage(sender: sender, message: message, chatID: 1)
+            firebase.setMessage(sender: sender, message: message, chatID: chatID)
             
             chat.addMessageToScrollView(controller: self, sender: sender, message: message)
             
