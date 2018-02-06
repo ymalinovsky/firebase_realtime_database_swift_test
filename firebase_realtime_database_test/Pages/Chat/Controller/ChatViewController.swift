@@ -10,6 +10,8 @@ import UIKit
 
 class ChatViewController: UIViewController {
     
+    @IBOutlet weak var currentUserLabel: UILabel!
+    
     @IBOutlet weak var messageTextField: UITextField!
     
     @IBOutlet weak var messagesScrollView: UIScrollView!
@@ -19,6 +21,9 @@ class ChatViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        firebase.chatVC = self
+        
+        currentUserLabel.text = currentUser
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -28,6 +33,10 @@ class ChatViewController: UIViewController {
     @IBAction func sendMessageButtonAction(_ sender: UIButton) {
         firebase.setData(sender: "ATATA!!!", message: "QWEQWEQWE")
     }
-        
+    
+    @IBAction func logoutButtonAction(_ sender: UIButton) {
+        firebase.logout()
+    }
+    
 }
 

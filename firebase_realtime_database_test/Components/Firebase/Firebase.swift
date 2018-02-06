@@ -12,6 +12,7 @@ import Firebase
 class Firebase {
     var loginVC: LoginViewController!
     var signInVC: SignInViewController!
+    var chatVC: ChatViewController!
     
     func emailRegistration(email: String, password: String) {
         Auth.auth().createUser(withEmail: email, password: password, completion: { (user, error) in
@@ -52,6 +53,12 @@ class Firebase {
     func logout() {
         do {
             try Auth.auth().signOut()
+            
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let homepageNC = storyboard.instantiateViewController(withIdentifier: "homepageNavigationController")
+            currentUser = String()
+            
+            self.chatVC.present(homepageNC, animated: true)
             print("logout successful")
         }
         catch {
