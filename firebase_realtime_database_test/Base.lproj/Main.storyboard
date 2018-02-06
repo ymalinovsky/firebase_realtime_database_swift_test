@@ -101,7 +101,7 @@
         <!--Sign In View Controller-->
         <scene sceneID="kCH-yY-aQD">
             <objects>
-                <viewController id="phg-kY-au4" customClass="SignInViewController" sceneMemberID="viewController">
+                <viewController id="phg-kY-au4" customClass="SignInViewController" customModule="firebase_realtime_database_test" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="hQQ-6U-PBx">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -127,6 +127,9 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dmF-sP-zyh">
                                 <rect key="frame" x="137" y="291" width="47" height="30"/>
                                 <state key="normal" title="Sign In"/>
+                                <connections>
+                                    <action selector="SignInButtonAction:" destination="phg-kY-au4" eventType="touchUpInside" id="afm-dc-E1g"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -145,6 +148,10 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="jfy-yJ-c7h"/>
                     </view>
+                    <connections>
+                        <outlet property="emailTextField" destination="Nx4-lf-DUi" id="cbt-84-19T"/>
+                        <outlet property="passwordTextField" destination="ONr-We-qcC" id="Afe-oI-1vz"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9Wc-ss-hLa" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

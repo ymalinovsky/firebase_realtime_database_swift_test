@@ -11,6 +11,7 @@ import Firebase
 
 class Firebase {
     var loginVC: LoginViewController!
+    var signInVC: SignInViewController!
     
     func emailRegistration(email: String, password: String) {
         Auth.auth().createUser(withEmail: email, password: password, completion: { (user, error) in
@@ -18,7 +19,11 @@ class Firebase {
                 print(error!)
             }
             else {
-                print("Registration Successful!")
+                let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                let chatVC = storyboard.instantiateViewController(withIdentifier: "chatViewController") as! ChatViewController
+                currentUser = email
+                
+                self.signInVC.present(chatVC, animated: true)
             }
         })
     }
@@ -32,6 +37,7 @@ class Firebase {
                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
                 let chatVC = storyboard.instantiateViewController(withIdentifier: "chatViewController") as! ChatViewController
                 currentUser = email
+                
                 self.loginVC.present(chatVC, animated: true)
             }
         })
