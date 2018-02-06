@@ -22,6 +22,7 @@
 		9E2A7A7F2028C36C00F7D45E /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E2A7A7E2028C36C00F7D45E /* LoginViewController.swift */; };
 		9E2A7A832028C74300F7D45E /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E2A7A822028C74300F7D45E /* SignInViewController.swift */; };
 		9E2A7A852028C7D400F7D45E /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E2A7A842028C7D400F7D45E /* App.swift */; };
+		9ECE50042029C92000C4DC96 /* Chat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ECE50032029C92000C4DC96 /* Chat.swift */; };
 		A21C939DC374777E6731FDE4 /* Pods_firebase_realtime_database_testTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8BA71F89A517F4B1A1B3BC9A /* Pods_firebase_realtime_database_testTests.framework */; };
 /* End PBXBuildFile section */
 
@@ -66,6 +67,7 @@
 		9E2A7A7E2028C36C00F7D45E /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		9E2A7A822028C74300F7D45E /* SignInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
 		9E2A7A842028C7D400F7D45E /* App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
+		9ECE50032029C92000C4DC96 /* Chat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chat.swift; sourceTree = "<group>"; };
 		A025C033F237869EF6A430EB /* Pods_firebase_realtime_database_test.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_firebase_realtime_database_test.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B236CA7291060A614240490E /* Pods_firebase_realtime_database_testUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_firebase_realtime_database_testUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CC667166A07BE62150AB21F2 /* Pods-firebase_realtime_database_testTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-firebase_realtime_database_testTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-firebase_realtime_database_testTests/Pods-firebase_realtime_database_testTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -184,6 +186,7 @@
 		9E2A7A762028BD7800F7D45E /* Chat */ = {
 			isa = PBXGroup;
 			children = (
+				9ECE50022029C90F00C4DC96 /* Helper */,
 				9E2A7A772028BD8800F7D45E /* Controller */,
 			);
 			path = Chat;
@@ -243,6 +246,14 @@
 				9E2A7A822028C74300F7D45E /* SignInViewController.swift */,
 			);
 			path = Controller;
+			sourceTree = "<group>";
+		};
+		9ECE50022029C90F00C4DC96 /* Helper */ = {
+			isa = PBXGroup;
+			children = (
+				9ECE50032029C92000C4DC96 /* Chat.swift */,
+			);
+			path = Helper;
 			sourceTree = "<group>";
 		};
 		D9ABB307E9BECCBEB87DCE8F /* Frameworks */ = {
@@ -560,6 +571,7 @@
 				9E2A7A832028C74300F7D45E /* SignInViewController.swift in Sources */,
 				9E2A7A7B2028BE0300F7D45E /* Firebase.swift in Sources */,
 				9E2A7A7F2028C36C00F7D45E /* LoginViewController.swift in Sources */,
+				9ECE50042029C92000C4DC96 /* Chat.swift in Sources */,
 				9E2A7A852028C7D400F7D45E /* App.swift in Sources */,
 				9E1E422220286DEE006418BA /* firebase_realtime_database_test.xcdatamodeld in Sources */,
 			);

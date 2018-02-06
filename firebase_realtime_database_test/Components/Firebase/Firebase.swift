@@ -13,7 +13,7 @@ class Firebase {
     var loginVC: LoginViewController!
     var signInVC: SignInViewController!
     var chatVC: ChatViewController!
-    
+
     func emailRegistration(email: String, password: String) {
         Auth.auth().createUser(withEmail: email, password: password, completion: { (user, error) in
             if error != nil {
@@ -87,21 +87,10 @@ class Firebase {
         
         messageDB.observeSingleEvent(of: .value) { snapshot in
             let messages = snapshot.value as! NSDictionary
-            var key = CGFloat(0)
             for message in messages {
                 let messageData = message.value as! NSDictionary
-                if let text = messageData["message"], let sender = messageData["sender"] {
-                    let labelHeight = CGFloat(25)
-                    let label = UILabel(frame: CGRect(x: 0, y: 0, width: self.chatVC.messagesScrollView.frame.size.width, height: labelHeight))
-                    
-                    if key > 0 {
-                        label.frame.origin.y = labelHeight * key
-                    }
-
-                    key += 1
-                    label.text = "\(sender): \(text)"
-                    self.chatVC.messagesScrollView.addSubview(label)
-                    self.chatVC.messagesScrollView.contentSize = CGSize(width: self.chatVC.messagesScrollView.frame.size.width, height: label.frame.origin.y + labelHeight)
+                if let message = messageData["message"], let sender = messageData["sender"] {
+                    self.chatVC.chat.addMessageToScrollView(controller: self.chatVC, sender: sender as! String, message: message as! String)
                 }
             }
         }

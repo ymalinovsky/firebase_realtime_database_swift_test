@@ -17,6 +17,7 @@ class ChatViewController: UIViewController {
     @IBOutlet weak var messagesScrollView: UIScrollView!
     
     let firebase = Firebase()
+    let chat = Chat()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,7 +32,14 @@ class ChatViewController: UIViewController {
     }
 
     @IBAction func sendMessageButtonAction(_ sender: UIButton) {
-        firebase.setData(sender: "ATATA!!!", message: "QWEQWEQWE")
+        if let sender = currentUserLabel.text, let message = messageTextField.text {
+            firebase.setData(sender: sender, message: message)
+            
+            chat.addMessageToScrollView(controller: self, sender: sender, message: message)
+            
+            let bottomOffset = CGPoint(x: 0, y: messagesScrollView.contentSize.height - messagesScrollView.bounds.size.height)
+            messagesScrollView.setContentOffset(bottomOffset, animated: true)
+        }
     }
     
     @IBAction func logoutButtonAction(_ sender: UIButton) {
