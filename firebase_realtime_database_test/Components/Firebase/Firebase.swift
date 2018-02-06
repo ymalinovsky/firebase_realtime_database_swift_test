@@ -85,13 +85,25 @@ class Firebase {
     func getData() {
         let messageDB = Database.database().reference().child("messages")
         
-        messageDB.observeSingleEvent(of: .childAdded) { snapshot in
-            let snapshotValue = snapshot.value as! NSDictionary
-            let text = snapshotValue["message"] as! String
-            let sender = snapshotValue["sender"] as! String
-            
-            print(text)
-            print(sender)
+        messageDB.observeSingleEvent(of: .value) { snapshot in
+            let messages = snapshot.value as! NSDictionary
+            var key = CGFloat(0)
+            for message in messages {
+                let messageData = message.value as! NSDictionary
+                if let text = messageData["message"], let sender = messageData["sender"] {
+                    let labelHeight = CGFloat(25)
+                    let label = UILabel(frame: CGRect(x: 0, y: 0, width: self.chatVC.messagesScrollView.frame.size.width, height: labelHeight))
+                    
+                    if key > 0 {
+                        label.frame.origin.y = labelHeight * key
+                    }
+
+                    key += 1
+                    label.text = "\(sender): \(text)"
+                    self.chatVC.messagesScrollView.addSubview(label)
+                    self.chatVC.messagesScrollView.contentSize = CGSize(width: self.chatVC.messagesScrollView.frame.size.width, height: label.frame.origin.y + labelHeight)
+                }
+            }
         }
     }
 }
