@@ -59,7 +59,6 @@ class Firebase {
             currentUser = String()
             
             self.chatVC.present(homepageNC, animated: true)
-            print("logout successful")
         }
         catch {
             print(error)
@@ -75,9 +74,6 @@ class Firebase {
             (error, ref) in
             if error != nil {
                 print(error!)
-            }
-            else {
-                print("Message saved successfully!")
             }
         }
     }
@@ -95,6 +91,17 @@ class Firebase {
                     }
                 }
             }
+            
+            messageDB.observe(.childAdded, with: { (snapshot) -> Void in
+                if snapshot.hasChildren() {
+                    let messageData = snapshot.value as! NSDictionary
+                    if let message = messageData["message"], let sender = messageData["sender"] {
+                        if sender as! String != currentUser {
+                            self.chatVC.chat.addMessageToScrollView(controller: self.chatVC, sender: sender as! String, message: message as! String)
+                        }
+                    }
+                }
+            })
         }
     }
 }
