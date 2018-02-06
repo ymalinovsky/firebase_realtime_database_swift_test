@@ -65,7 +65,7 @@ class Firebase {
         }
     }
     
-    func setData(sender: String, message: String) {
+    func setMessage(sender: String, message: String) {
         let messagesDB = Database.database().reference().child("messages")
         
         let messageDictionary : NSDictionary = ["sender" : sender, "message" : message]
@@ -78,30 +78,21 @@ class Firebase {
         }
     }
     
-    func getData() {
+    func addNewMessageObserver() {
         let messageDB = Database.database().reference().child("messages")
         
-        messageDB.observeSingleEvent(of: .value) { snapshot in
+        messageDB.observe(.childAdded, with: { (snapshot) -> Void in
             if snapshot.hasChildren() {
-                let messages = snapshot.value as! NSDictionary
-                for message in messages {
-                    let messageData = message.value as! NSDictionary
-                    if let message = messageData["message"], let sender = messageData["sender"] {
-                        self.chatVC.chat.addMessageToScrollView(controller: self.chatVC, sender: sender as! String, message: message as! String)
+                let messageData = snapshot.value as! NSDictionary
+                if let message = messageData["message"], let sender = messageData["sender"] {
+                    self.chatVC.chat.addMessageToScrollView(controller: self.chatVC, sender: sender as! String, message: message as! String)
+                    
+                    if self.chatVC.messagesScrollView.contentSize.height > self.chatVC.messagesScrollView.frame.size.height {
+                        let bottomOffset = CGPoint(x: 0, y: self.chatVC.messagesScrollView.contentSize.height - self.chatVC.messagesScrollView.bounds.size.height)
+                        self.chatVC.messagesScrollView.setContentOffset(bottomOffset, animated: true)
                     }
                 }
             }
-            
-            messageDB.observe(.childAdded, with: { (snapshot) -> Void in
-                if snapshot.hasChildren() {
-                    let messageData = snapshot.value as! NSDictionary
-                    if let message = messageData["message"], let sender = messageData["sender"] {
-                        if sender as! String != currentUser {
-                            self.chatVC.chat.addMessageToScrollView(controller: self.chatVC, sender: sender as! String, message: message as! String)
-                        }
-                    }
-                }
-            })
-        }
+        })
     }
 }
