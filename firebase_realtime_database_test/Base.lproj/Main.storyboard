@@ -158,6 +158,64 @@
             </objects>
             <point key="canvasLocation" x="-251" y="124"/>
         </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="w8T-Am-jiA">
+            <objects>
+                <navigationController storyboardIdentifier="chatsNavigationController" id="tWG-0s-ybK" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="LfM-8R-Vua">
+                        <rect key="frame" x="0.0" y="20" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="AmR-gZ-tMC" kind="relationship" relationship="rootViewController" id="kCB-p9-hKh"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="6v4-AE-nVu" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-2034" y="873"/>
+        </scene>
+        <!--Chats View Controller-->
+        <scene sceneID="0YA-7W-8Hp">
+            <objects>
+                <viewController id="AmR-gZ-tMC" customClass="ChatsViewController" customModule="firebase_realtime_database_test" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="uTv-3u-vrU">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Y2a-vE-yoW">
+                                <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="chatsCell" id="Sem-oQ-1xv">
+                                        <rect key="frame" x="0.0" y="28" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Sem-oQ-1xv" id="4T3-Th-DjI">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="Y2a-vE-yoW" firstAttribute="leading" secondItem="EMp-81-IWg" secondAttribute="leading" id="UVK-Nh-XWa"/>
+                            <constraint firstItem="Y2a-vE-yoW" firstAttribute="bottom" secondItem="EMp-81-IWg" secondAttribute="bottom" id="ccy-oj-JBi"/>
+                            <constraint firstItem="Y2a-vE-yoW" firstAttribute="top" secondItem="EMp-81-IWg" secondAttribute="top" id="ctq-Pp-cWA"/>
+                            <constraint firstItem="Y2a-vE-yoW" firstAttribute="trailing" secondItem="EMp-81-IWg" secondAttribute="trailing" id="xYL-yg-MXj"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="EMp-81-IWg"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="GBJ-bP-QrL"/>
+                    <connections>
+                        <outlet property="tableView" destination="Y2a-vE-yoW" id="QJP-hT-Ba5"/>
+                        <segue destination="BYZ-38-t0r" kind="show" identifier="chatSegue" id="ZbS-mk-mPq"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="NCT-wN-DcT" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1125" y="872.53521126760563"/>
+        </scene>
         <!--Chat View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
@@ -167,10 +225,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="5JI-d5-xvO">
-                                <rect key="frame" x="0.0" y="47" width="320" height="465"/>
+                                <rect key="frame" x="0.0" y="91" width="320" height="421"/>
                                 <subviews>
                                     <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IZ1-5u-T7y">
-                                        <rect key="frame" x="0.0" y="0.0" width="320" height="465"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="421"/>
                                     </scrollView>
                                 </subviews>
                             </stackView>
@@ -190,7 +248,7 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="y2i-Ec-pSH">
-                                <rect key="frame" x="16" y="20" width="229" height="27"/>
+                                <rect key="frame" x="16" y="64" width="229" height="27"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="27" id="hMe-Qw-09k"/>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="229" id="hVx-H3-Is3"/>
@@ -200,7 +258,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dAE-Ah-gb5">
-                                <rect key="frame" x="245" y="20" width="75" height="27"/>
+                                <rect key="frame" x="245" y="64" width="75" height="27"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="dAE-Ah-gb5" secondAttribute="height" multiplier="25:9" id="nYP-gR-wPz"/>
                                 </constraints>
@@ -239,7 +297,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="607.5" y="123.59154929577466"/>
+            <point key="canvasLocation" x="-248" y="873"/>
         </scene>
     </scenes>
 </document>

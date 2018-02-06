@@ -18,6 +18,7 @@ class ChatViewController: UIViewController {
     
     let firebase = Firebase()
     let chat = Chat()
+    var chatID: Int!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,7 +32,7 @@ class ChatViewController: UIViewController {
 
     @IBAction func sendMessageButtonAction(_ sender: UIButton) {
         if let sender = currentUserLabel.text, let message = messageTextField.text {
-            firebase.setMessage(sender: sender, message: message)
+            firebase.setMessage(sender: sender, message: message, chatID: 1)
         }
     }
     

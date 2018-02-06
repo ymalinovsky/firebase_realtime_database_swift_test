@@ -21,10 +21,10 @@ class Firebase {
             }
             else {
                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                let chatVC = storyboard.instantiateViewController(withIdentifier: "chatViewController") as! ChatViewController
+                let chatsNC = storyboard.instantiateViewController(withIdentifier: "chatsNavigationController")
                 currentUser = email
                 
-                self.signInVC.present(chatVC, animated: true)
+                self.signInVC.present(chatsNC, animated: true)
             }
         })
     }
@@ -36,10 +36,10 @@ class Firebase {
             }
             else {
                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                let chatVC = storyboard.instantiateViewController(withIdentifier: "chatViewController") as! ChatViewController
+                let chatsNC = storyboard.instantiateViewController(withIdentifier: "chatsNavigationController")
                 currentUser = email
                 
-                self.loginVC.present(chatVC, animated: true)
+                self.loginVC.present(chatsNC, animated: true)
             }
         })
     }
@@ -65,13 +65,12 @@ class Firebase {
         }
     }
     
-    func setMessage(sender: String, message: String) {
-        let messagesDB = Database.database().reference().child("messages")
+    func setMessage(sender: String, message: String, chatID: Int) {
+        let messagesDB = Database.database().reference().child(String(chatID)).child("messages")
         
         let messageDictionary : NSDictionary = ["sender" : sender, "message" : message]
         
-        messagesDB.child(String(describing: Int(Date().timeIntervalSinceReferenceDate))).setValue(messageDictionary) {
-            (error, ref) in
+        messagesDB.child(String(describing: Int(Date().timeIntervalSinceReferenceDate))).setValue(messageDictionary) { (error, ref) in
             if error != nil {
                 print(error!)
             }
