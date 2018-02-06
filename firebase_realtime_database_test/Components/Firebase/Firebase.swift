@@ -71,7 +71,7 @@ class Firebase {
         
         let messageDictionary : NSDictionary = ["sender" : sender, "message" : message]
         
-        messagesDB.childByAutoId().setValue(messageDictionary) {
+        messagesDB.child(String(describing: Int(Date().timeIntervalSinceReferenceDate))).setValue(messageDictionary) {
             (error, ref) in
             if error != nil {
                 print(error!)
