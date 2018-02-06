@@ -37,8 +37,10 @@ class ChatViewController: UIViewController {
             
             chat.addMessageToScrollView(controller: self, sender: sender, message: message)
             
-            let bottomOffset = CGPoint(x: 0, y: messagesScrollView.contentSize.height - messagesScrollView.bounds.size.height)
-            messagesScrollView.setContentOffset(bottomOffset, animated: true)
+            if messagesScrollView.contentSize.height > messagesScrollView.frame.size.height {
+                let bottomOffset = CGPoint(x: 0, y: messagesScrollView.contentSize.height - messagesScrollView.bounds.size.height)
+                messagesScrollView.setContentOffset(bottomOffset, animated: true)
+            }
         }
     }
     

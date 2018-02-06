@@ -86,11 +86,13 @@ class Firebase {
         let messageDB = Database.database().reference().child("messages")
         
         messageDB.observeSingleEvent(of: .value) { snapshot in
-            let messages = snapshot.value as! NSDictionary
-            for message in messages {
-                let messageData = message.value as! NSDictionary
-                if let message = messageData["message"], let sender = messageData["sender"] {
-                    self.chatVC.chat.addMessageToScrollView(controller: self.chatVC, sender: sender as! String, message: message as! String)
+            if snapshot.hasChildren() {
+                let messages = snapshot.value as! NSDictionary
+                for message in messages {
+                    let messageData = message.value as! NSDictionary
+                    if let message = messageData["message"], let sender = messageData["sender"] {
+                        self.chatVC.chat.addMessageToScrollView(controller: self.chatVC, sender: sender as! String, message: message as! String)
+                    }
                 }
             }
         }
