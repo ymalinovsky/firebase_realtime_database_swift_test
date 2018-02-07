@@ -7,12 +7,14 @@
 //
 
 import UIKit
+import Firebase
 
 class ChatsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     @IBOutlet weak var tableView: UITableView!
     
     let chatIDs = [1, 2]
+    var newMessageChatIDs = [Int]()
     
     let chatCellIdentifier = "chatsCell"
     let chatSegueIdentifier = "chatSegue"
@@ -29,8 +31,26 @@ class ChatsViewController: UIViewController, UITableViewDelegate, UITableViewDat
             firebase.newMessageObserver(chatID: chatID)
         }
 
+        NotificationCenter.default.addObserver(self, selector: #selector(newMessage), name: .newMessage, object: nil)
     }
 
+    @objc func newMessage(notification: NSNotification) {
+        if let notificationData = notification.userInfo?.first?.value {
+            for notification in notificationData as! [Int: DataSnapshot] {
+                let chatID = notification.key
+                
+                if !newMessageChatIDs.contains(where: {$0 == chatID}) {
+                    newMessageChatIDs.append(chatID)
+                    tableView.reloadData()
+                }
+            }
+        }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        tableView.reloadData()
+    }
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
@@ -53,12 +73,23 @@ class ChatsViewController: UIViewController, UITableViewDelegate, UITableViewDat
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: chatCellIdentifier)!
         
-        cell.textLabel?.text = String(chatIDs[indexPath.row])
+        let chatID = chatIDs[indexPath.row]
+        
+        cell.textLabel?.text = String(chatID)
+        
+        if newMessageChatIDs.contains(where: {$0 == chatID}) {
+            cell.accessoryType = .checkmark
+        } else {
+            cell.accessoryType = .none
+        }
         
         return cell
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let chatID = chatIDs[indexPath.row]
+        newMessageChatIDs = newMessageChatIDs.filter() { $0 != chatID }
+        
         selectedIndexRow = indexPath.row
         performSegue(withIdentifier: chatSegueIdentifier, sender: self)
     }
