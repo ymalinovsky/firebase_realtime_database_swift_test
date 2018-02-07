@@ -12,10 +12,12 @@ import UIKit
 class Chat {
     
     func prepareChatVCData(controller: ChatViewController, chatID: Int) {
-        for chatData in chatsData {
-            if chatData.key == chatID {
-                for messageData in chatData.value {
-                    addMessageToScrollView(controller: controller, sender: messageData.sender, message: messageData.message)
+        if let chatsData = chatsData {
+            for chatData in chatsData {
+                if chatData.key == chatID {
+                    for messageData in chatData.value {
+                        addMessageToScrollView(controller: controller, sender: messageData.sender, message: messageData.message)
+                    }
                 }
             }
         }

@@ -14,8 +14,6 @@ class SignInViewController: UIViewController {
     
     @IBOutlet weak var passwordTextField: UITextField!
     
-    let firebase = Firebase()
-    
     override func viewDidLoad() {
         super.viewDidLoad()
 

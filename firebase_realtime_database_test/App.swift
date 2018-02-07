@@ -18,6 +18,8 @@ struct Massage {
     let message: String
 }
 
+let firebase = Firebase()
+
 var currentUser = String()
 
 var chatsData: [Int: [Massage]]!

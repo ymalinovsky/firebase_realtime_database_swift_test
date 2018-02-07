@@ -12,8 +12,6 @@ class ChatsViewController: UIViewController, UITableViewDelegate, UITableViewDat
 
     @IBOutlet weak var tableView: UITableView!
     
-    let firebase = Firebase()
-    
     let chatIDs = [1, 2]
     
     let chatCellIdentifier = "chatsCell"

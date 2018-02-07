@@ -16,7 +16,6 @@ class ChatViewController: UIViewController {
     
     @IBOutlet weak var messagesScrollView: UIScrollView!
     
-    let firebase = Firebase()
     let chat = Chat()
     var chatID: Int!
     
