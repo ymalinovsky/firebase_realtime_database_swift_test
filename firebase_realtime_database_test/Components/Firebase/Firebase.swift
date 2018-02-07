@@ -77,37 +77,6 @@ class Firebase {
         }
     }
     
-    func getChatsData() {
-        let messagesDB = Database.database().reference()
-        
-        messagesDB.observe(.childAdded, with: { (snapshot) -> Void in
-            if snapshot.hasChildren() {
-                let chatData = snapshot.value as! NSDictionary
-                let messagesData = chatData["messages"] as! NSDictionary
-                
-                for messageData in messagesData {
-                    let message = messageData.value as! NSDictionary
-                    if let sender = message["sender"], let message = message["message"] {
-                        if let chatID = Int(snapshot.key) {
-                            if chatsData != nil {
-                                if var chatMassages = chatsData[chatID] {
-                                    let massage = Massage(sender: String(describing: sender), message: String(describing: message))
-                                    chatMassages.append(massage)
-                                    
-                                    chatsData[chatID] = chatMassages
-                                } else {
-                                    chatsData = [chatID: [Massage(sender: String(describing: sender), message: String(describing: message))]]
-                                }
-                            } else {
-                                chatsData = [chatID: [Massage(sender: String(describing: sender), message: String(describing: message))]]
-                            }
-                        }
-                    }
-                }
-            }
-        })
-    }
-    
     func newMessageObserver(chatID: Int) {
         let chatMessagesDB = Database.database().reference().child(String(chatID)).child("messages")
         
@@ -122,7 +91,7 @@ class Firebase {
                             
                             chatsData[chatID] = chatMassages
                         } else {
-                            chatsData = [chatID: [Massage(sender: String(describing: sender), message: String(describing: message))]]
+                            chatsData[chatID] = [Massage(sender: String(describing: sender), message: String(describing: message))]
                         }
                     } else {
                         chatsData = [chatID: [Massage(sender: String(describing: sender), message: String(describing: message))]]
