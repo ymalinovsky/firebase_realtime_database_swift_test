@@ -28,17 +28,20 @@ class ChatViewController: UIViewController {
         currentUserLabel.text = currentUser
         chat.prepareChatVCData(controller: self, chatID: chatID)
         
-        NotificationCenter.default.addObserver(self, selector: #selector(newMessage(notification:)), name: .newMessage, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(newMessage), name: .newMessage, object: nil)
     }
     
     @objc func newMessage(notification: NSNotification) {
         if let notificationData = notification.userInfo?.first?.value {
-            let snapshot = notificationData as! DataSnapshot
-            
-            if snapshot.hasChildren() {
-                let message = snapshot.value as! NSDictionary
-                if let sender = message["sender"], let message = message["message"] {
-                    chat.addMessageToScrollView(controller: self, sender: String(describing: sender), message: String(describing: message))
+            for notification in notificationData as! [Int: DataSnapshot] {
+                let snapshot = notification.value
+                let chatID = notification.key
+                
+                if snapshot.hasChildren() && chatID == self.chatID {
+                    let message = snapshot.value as! NSDictionary
+                    if let sender = message["sender"], let message = message["message"] {
+                        chat.addMessageToScrollView(controller: self, sender: String(describing: sender), message: String(describing: message))
+                    }
                 }
             }
 
@@ -48,7 +51,6 @@ class ChatViewController: UIViewController {
     @IBAction func sendMessageButtonAction(_ sender: UIButton) {
         if let sender = currentUserLabel.text, let message = messageTextField.text {
             firebase.setMessage(sender: sender, message: message, chatID: chatID)
-            chat.addMessageToScrollView(controller: self, sender: sender, message: message)
         }
     }
     

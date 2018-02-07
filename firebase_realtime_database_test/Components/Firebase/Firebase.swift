@@ -97,7 +97,7 @@ class Firebase {
                         chatsData = [chatID: [Massage(sender: String(describing: sender), message: String(describing: message))]]
                     }
                     
-                    NotificationCenter.default.post(name: .newMessage, object: nil, userInfo: [chatID: snapshot])
+                    NotificationCenter.default.post(name: .newMessage, object: nil, userInfo: [chatID: [chatID: snapshot]])
                 }
             }
         })
