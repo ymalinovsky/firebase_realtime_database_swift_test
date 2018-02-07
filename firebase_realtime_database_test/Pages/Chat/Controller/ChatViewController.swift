@@ -47,6 +47,10 @@ class ChatViewController: UIViewController {
 
         }
     }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        NotificationCenter.default.post(name: .fromChatVCtoChatsVC, object: nil, userInfo: [chatID: chatID])
+    }
 
     @IBAction func sendMessageButtonAction(_ sender: UIButton) {
         if let sender = currentUserLabel.text, let message = messageTextField.text {

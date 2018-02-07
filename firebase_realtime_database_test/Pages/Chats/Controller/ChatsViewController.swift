@@ -32,6 +32,7 @@ class ChatsViewController: UIViewController, UITableViewDelegate, UITableViewDat
         }
 
         NotificationCenter.default.addObserver(self, selector: #selector(newMessage), name: .newMessage, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(fromChatVCtoChatsVC), name: .fromChatVCtoChatsVC, object: nil)
     }
 
     @objc func newMessage(notification: NSNotification) {
@@ -39,11 +40,18 @@ class ChatsViewController: UIViewController, UITableViewDelegate, UITableViewDat
             for notification in notificationData as! [Int: DataSnapshot] {
                 let chatID = notification.key
                 
-                if !newMessageChatIDs.contains(where: {$0 == chatID}) {
+                if !newMessageChatIDs.contains(where: { $0 == chatID }) {
                     newMessageChatIDs.append(chatID)
                     tableView.reloadData()
                 }
             }
+        }
+    }
+    
+    @objc func fromChatVCtoChatsVC(notification: NSNotification) {
+        if let notificationData = notification.userInfo?.first?.value {
+            let prevChatID = notificationData as! Int
+            newMessageChatIDs = newMessageChatIDs.filter() { $0 != prevChatID }
         }
     }
     
@@ -77,7 +85,7 @@ class ChatsViewController: UIViewController, UITableViewDelegate, UITableViewDat
         
         cell.textLabel?.text = String(chatID)
         
-        if newMessageChatIDs.contains(where: {$0 == chatID}) {
+        if newMessageChatIDs.contains(where: { $0 == chatID }) {
             cell.accessoryType = .checkmark
         } else {
             cell.accessoryType = .none
