@@ -28,6 +28,7 @@ class ChatsViewController: UIViewController, UITableViewDelegate, UITableViewDat
         for chatID in chatIDs {
             firebase.newMessageObserver(chatID: chatID)
         }
+
     }
 
     // MARK: - Navigation

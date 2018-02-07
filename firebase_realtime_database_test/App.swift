@@ -13,6 +13,10 @@ struct App {
     static let testPassword = "test911"
 }
 
+extension Notification.Name {
+    static let newMessage = Notification.Name(rawValue: "newMessage")
+}
+
 struct Massage {
     let sender: String
     let message: String
@@ -23,5 +27,4 @@ let firebase = Firebase()
 var currentUser = String()
 
 var chatsData: [Int: [Massage]]!
-
 

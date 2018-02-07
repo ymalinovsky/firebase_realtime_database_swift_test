@@ -10,7 +10,6 @@ import Foundation
 import UIKit
 
 class Chat {
-    
     func prepareChatVCData(controller: ChatViewController, chatID: Int) {
         if let chatsData = chatsData {
             for chatData in chatsData {
@@ -31,5 +30,10 @@ class Chat {
         label.text = "\(sender): \(message)"
         controller.messagesScrollView.addSubview(label)
         controller.messagesScrollView.contentSize = CGSize(width: controller.messagesScrollView.frame.size.width, height: label.frame.origin.y + labelHeight)
+        
+        if controller.messagesScrollView.contentSize.height > controller.messagesScrollView.frame.size.height {
+            let bottomOffset = CGPoint(x: 0, y: controller.messagesScrollView.contentSize.height - controller.messagesScrollView.bounds.size.height)
+            controller.messagesScrollView.setContentOffset(bottomOffset, animated: true)
+        }
     }
 }
