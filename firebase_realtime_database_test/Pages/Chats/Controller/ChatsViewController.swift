@@ -60,7 +60,7 @@ class ChatsViewController: UIViewController, UITableViewDelegate, UITableViewDat
     }
     
     @IBAction func addNewChatButtonAction(_ sender: UIBarButtonItem) {
-        
+        firebase.createNewChatDBField(chatID: chats.count + 1, title: "TEST")
     }
     
     // MARK: - Navigation
