@@ -14,8 +14,9 @@ struct App {
 }
 
 extension Notification.Name {
-    static let newMessage = Notification.Name(rawValue: "newMessage")
-    static let fromChatVCtoChatsVC = Notification.Name(rawValue: "fromChatVCtoChatsVC")
+    static let newMessage = Notification.Name("newMessage")
+    static let fromChatVCtoChatsVC = Notification.Name("fromChatVCtoChatsVC")
+    static let newChatWasCreated = Notification.Name("newChatWasCreated")
 }
 
 struct Massage {

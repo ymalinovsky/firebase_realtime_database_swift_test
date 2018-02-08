@@ -54,9 +54,9 @@ class Firebase {
     }
     
     func createNewUserDBField(userID: String) {
-        let messagesDB = Database.database().reference().child("users").child("user")
+        let userDB = Database.database().reference().child("users").child("user")
         
-        messagesDB.child("id").setValue(userID) { (error, ref) in
+        userDB.child("id").setValue(userID) { (error, ref) in
             if error != nil {
                 print(error!)
             }
@@ -64,12 +64,14 @@ class Firebase {
     }
     
     func createNewChatDBField(chatID: Int, title: String) {
-        let messagesDB = Database.database().reference().child("chats").child(String(chatID))
+        let chatsDB = Database.database().reference().child("chats").child(String(chatID))
         
-        messagesDB.child("title").setValue(title) { (error, ref) in
+        chatsDB.child("title").setValue(title) { (error, ref) in
             if error != nil {
                 print(error!)
             }
+            
+            NotificationCenter.default.post(name: .newChatWasCreated, object: nil, userInfo: [chatID: ["chatID": chatID, "title": title, "owner": currentUser]])
         }
     }
     
@@ -130,7 +132,16 @@ class Firebase {
         })
     }
     
-    func addNewChatObserver(chatID: Int) {
+    func addNewChatObserverSingleEvent() {
+        let chatsDB = Database.database().reference().child("chats")
         
+        chatsDB.observeSingleEvent(of: .value, with: { (snapshot) -> Void in
+            let chats = snapshot.children.allObjects
+
+            let chatID = chats.count + 1
+            let title = "TEST = \(chatID)"
+
+            self.createNewChatDBField(chatID: chatID, title: title)
+        })
     }
 }

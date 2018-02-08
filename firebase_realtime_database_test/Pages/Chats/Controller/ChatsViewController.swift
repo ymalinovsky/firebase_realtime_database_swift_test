@@ -13,7 +13,7 @@ class ChatsViewController: UIViewController, UITableViewDelegate, UITableViewDat
 
     @IBOutlet weak var tableView: UITableView!
     
-    let chats = [Int: String]()
+    var chats = [Int: String]()
     var newMessageChatIDs = [Int]()
     
     let chatCellIdentifier = "chatsCell"
@@ -33,6 +33,7 @@ class ChatsViewController: UIViewController, UITableViewDelegate, UITableViewDat
 
         NotificationCenter.default.addObserver(self, selector: #selector(newMessage), name: .newMessage, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(fromChatVCtoChatsVC), name: .fromChatVCtoChatsVC, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(newChatWasCreated), name: .newChatWasCreated, object: nil)
     }
 
     @objc func newMessage(notification: NSNotification) {
@@ -55,12 +56,28 @@ class ChatsViewController: UIViewController, UITableViewDelegate, UITableViewDat
         }
     }
     
+    @objc func newChatWasCreated(notification: NSNotification) {
+        if let notificationData = notification.userInfo?.first?.value {
+            let createdChatData = notificationData as! [String: Any]
+            
+            let owner = createdChatData["owner"] as! String
+            if owner == currentUser {
+                let chatID = createdChatData["chatID"] as! Int
+                let title = createdChatData["title"] as! String
+                
+                chats[chatID] = title
+                
+                tableView.reloadData()
+            }
+        }
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         tableView.reloadData()
     }
     
     @IBAction func addNewChatButtonAction(_ sender: UIBarButtonItem) {
-        firebase.createNewChatDBField(chatID: chats.count + 1, title: "TEST")
+        firebase.addNewChatObserverSingleEvent()
     }
     
     // MARK: - Navigation
