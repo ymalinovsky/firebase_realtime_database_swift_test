@@ -27,6 +27,7 @@ class ChatsViewController: UIViewController, UITableViewDelegate, UITableViewDat
         tableView.delegate = self
         tableView.dataSource = self
         
+        firebase.getAvailableCurrentUserChatList(userID: currentUser)
         for chatData in chats {
             for chat in chatData {
                 firebase.newMessageObserver(chatID: chat.key)

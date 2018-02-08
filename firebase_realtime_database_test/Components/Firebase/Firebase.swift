@@ -73,6 +73,19 @@ class Firebase {
         }
     }
     
+    func addNewChatObserverSingleEvent() {
+        let chatsDB = Database.database().reference().child("chats")
+        
+        chatsDB.observeSingleEvent(of: .value, with: { (snapshot) -> Void in
+            let chats = snapshot.children.allObjects
+            
+            let chatID = chats.count + 1
+            let title = "TEST = \(chatID)"
+            
+            self.createNewChatDBField(chatID: chatID, title: title)
+        })
+    }
+    
     func createNewChatDBField(chatID: Int, title: String) {
         let chatsDB = Database.database().reference().child("chats").child(String(chatID))
         
@@ -83,6 +96,22 @@ class Firebase {
             
             NotificationCenter.default.post(name: .newChatWasCreated, object: nil, userInfo: [chatID: ["chatID": chatID, "title": title, "owner": currentUser]])
         }
+    }
+    
+    func getAvailableCurrentUserChatList(userID: String) {
+        let chatsDB = Database.database().reference().child("users").child(userID.addingPercentEncoding(withAllowedCharacters:NSCharacterSet.alphanumerics)!).child("chats")
+        
+        chatsDB.observeSingleEvent(of: .value, with: { (snapshot) -> Void in
+            let chats = snapshot.children
+            
+            for chatData in chats {
+                let chat = chatData as! Dictionary<Int, Bool>
+                print("ATATA!!")
+            }
+//            let chatKeys = chats.allKeys
+            
+            print("ATATA!!!")
+        })
     }
     
     func logout() {
@@ -139,19 +168,6 @@ class Firebase {
                     NotificationCenter.default.post(name: .newMessage, object: nil, userInfo: [chatID: [chatID: snapshot]])
                 }
             }
-        })
-    }
-    
-    func addNewChatObserverSingleEvent() {
-        let chatsDB = Database.database().reference().child("chats")
-        
-        chatsDB.observeSingleEvent(of: .value, with: { (snapshot) -> Void in
-            let chats = snapshot.children.allObjects
-
-            let chatID = chats.count + 1
-            let title = "TEST = \(chatID)"
-
-            self.createNewChatDBField(chatID: chatID, title: title)
         })
     }
 }
