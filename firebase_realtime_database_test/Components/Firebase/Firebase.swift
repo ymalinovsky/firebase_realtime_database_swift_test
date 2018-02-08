@@ -54,9 +54,19 @@ class Firebase {
     }
     
     func createNewUserDBField(userID: String) {
-        let userDB = Database.database().reference().child("users").child("user")
+        let userDB = Database.database().reference().child("users").child(userID.addingPercentEncoding(withAllowedCharacters:NSCharacterSet.alphanumerics)!)
         
         userDB.child("id").setValue(userID) { (error, ref) in
+            if error != nil {
+                print(error!)
+            }
+        }
+    }
+    
+    func addNewChatToUser(userID: String, chatID: Int, status: Bool) {
+        let userDB = Database.database().reference().child("users").child(userID.addingPercentEncoding(withAllowedCharacters:NSCharacterSet.alphanumerics)!).child("chats")
+        
+        userDB.child(String(describing: chatID)).setValue(status) { (error, ref) in
             if error != nil {
                 print(error!)
             }

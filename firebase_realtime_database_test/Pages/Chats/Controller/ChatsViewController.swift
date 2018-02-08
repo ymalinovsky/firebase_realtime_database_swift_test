@@ -62,14 +62,16 @@ class ChatsViewController: UIViewController, UITableViewDelegate, UITableViewDat
         if let notificationData = notification.userInfo?.first?.value {
             let createdChatData = notificationData as! [String: Any]
             
+            let chatID = createdChatData["chatID"] as! Int
+            let title = createdChatData["title"] as! String
             let owner = createdChatData["owner"] as! String
+            
             if owner == currentUser {
-                let chatID = createdChatData["chatID"] as! Int
-                let title = createdChatData["title"] as! String
-                
-                chats.append([chatID: title])
-                
-                tableView.reloadData()
+//                chats.append([chatID: title])
+//                tableView.reloadData()
+                firebase.addNewChatToUser(userID: owner, chatID: chatID, status: true)
+            } else {
+                firebase.addNewChatToUser(userID: owner, chatID: chatID, status: false)
             }
         }
     }
