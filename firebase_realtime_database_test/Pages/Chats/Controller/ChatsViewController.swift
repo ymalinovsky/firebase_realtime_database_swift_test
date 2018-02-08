@@ -13,7 +13,7 @@ class ChatsViewController: UIViewController, UITableViewDelegate, UITableViewDat
 
     @IBOutlet weak var tableView: UITableView!
     
-    var chats = [Int: String]()
+    var chats = [[Int: String]]()
     var newMessageChatIDs = [Int]()
     
     let chatCellIdentifier = "chatsCell"
@@ -27,8 +27,10 @@ class ChatsViewController: UIViewController, UITableViewDelegate, UITableViewDat
         tableView.delegate = self
         tableView.dataSource = self
         
-        for chat in chats {
-            firebase.newMessageObserver(chatID: chat.key)
+        for chatData in chats {
+            for chat in chatData {
+                firebase.newMessageObserver(chatID: chat.key)
+            }
         }
 
         NotificationCenter.default.addObserver(self, selector: #selector(newMessage), name: .newMessage, object: nil)
@@ -65,7 +67,7 @@ class ChatsViewController: UIViewController, UITableViewDelegate, UITableViewDat
                 let chatID = createdChatData["chatID"] as! Int
                 let title = createdChatData["title"] as! String
                 
-                chats[chatID] = title
+                chats.append([chatID: title])
                 
                 tableView.reloadData()
             }
@@ -102,9 +104,9 @@ class ChatsViewController: UIViewController, UITableViewDelegate, UITableViewDat
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: chatCellIdentifier)!
         
-        let chatID = indexPath.row
+        let chatID = chats[indexPath.row].first?.key
         
-        let chatTitle = chats[chatID]
+        let chatTitle = chats[indexPath.row].first?.value
         
         cell.textLabel?.text = chatTitle
         
@@ -118,7 +120,7 @@ class ChatsViewController: UIViewController, UITableViewDelegate, UITableViewDat
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let chatID = indexPath.row
+        let chatID = chats[indexPath.row].first?.key
         
         newMessageChatIDs = newMessageChatIDs.filter() { $0 != chatID }
         
