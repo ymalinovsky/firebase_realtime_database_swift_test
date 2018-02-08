@@ -17,7 +17,7 @@ class ChatViewController: UIViewController {
     
     @IBOutlet weak var messagesScrollView: UIScrollView!
     
-    let chat = Chat()
+    let helper = Chat()
     var chatID: Int!
     
     override func viewDidLoad() {
@@ -26,7 +26,7 @@ class ChatViewController: UIViewController {
         firebase.chatVC = self
         
         currentUserLabel.text = currentUser
-        chat.prepareChatVCData(controller: self, chatID: chatID)
+        helper.prepareChatVCData(controller: self, chatID: chatID)
         
         NotificationCenter.default.addObserver(self, selector: #selector(newMessage), name: .newMessage, object: nil)
     }
@@ -40,7 +40,7 @@ class ChatViewController: UIViewController {
                 if snapshot.hasChildren() && chatID == self.chatID {
                     let message = snapshot.value as! NSDictionary
                     if let sender = message["sender"], let message = message["message"] {
-                        chat.addMessageToScrollView(controller: self, sender: String(describing: sender), message: String(describing: message))
+                        helper.addMessageToScrollView(controller: self, sender: String(describing: sender), message: String(describing: message))
                     }
                 }
             }

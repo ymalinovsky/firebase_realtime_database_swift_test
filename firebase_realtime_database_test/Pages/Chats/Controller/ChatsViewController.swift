@@ -69,6 +69,8 @@ class ChatsViewController: UIViewController, UITableViewDelegate, UITableViewDat
             if owner == currentUser {
 //                chats.append([chatID: title])
 //                tableView.reloadData()
+                
+                firebase.newMessageObserver(chatID: chatID)
                 firebase.addNewChatToUser(userID: owner, chatID: chatID, status: true)
             } else {
                 firebase.addNewChatToUser(userID: owner, chatID: chatID, status: false)
