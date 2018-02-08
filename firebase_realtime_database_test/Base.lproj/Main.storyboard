@@ -135,17 +135,17 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="Nx4-lf-DUi" firstAttribute="leading" secondItem="hQQ-6U-PBx" secondAttribute="leadingMargin" id="04d-1n-jd6"/>
                             <constraint firstItem="dmF-sP-zyh" firstAttribute="top" secondItem="ONr-We-qcC" secondAttribute="bottom" constant="12" id="0bD-R3-SMF"/>
+                            <constraint firstItem="jfy-yJ-c7h" firstAttribute="trailing" secondItem="Nx4-lf-DUi" secondAttribute="trailing" constant="16" id="1fI-Qg-niJ"/>
+                            <constraint firstItem="ONr-We-qcC" firstAttribute="leading" secondItem="Nx4-lf-DUi" secondAttribute="leading" id="E1W-V8-yRF"/>
                             <constraint firstItem="ZZp-L4-n4o" firstAttribute="top" secondItem="jfy-yJ-c7h" secondAttribute="top" constant="118" id="R0M-1n-fsR"/>
                             <constraint firstItem="Nx4-lf-DUi" firstAttribute="top" secondItem="ZZp-L4-n4o" secondAttribute="bottom" constant="8" symbolic="YES" id="Rm1-pv-VRB"/>
                             <constraint firstItem="ZZp-L4-n4o" firstAttribute="trailing" secondItem="hQQ-6U-PBx" secondAttribute="trailingMargin" id="WDE-yL-Okd"/>
-                            <constraint firstItem="Nx4-lf-DUi" firstAttribute="trailing" secondItem="ONr-We-qcC" secondAttribute="trailing" id="WgJ-B4-lFI"/>
                             <constraint firstItem="ZZp-L4-n4o" firstAttribute="leading" secondItem="jfy-yJ-c7h" secondAttribute="leading" constant="11" id="XbV-Ur-SyB"/>
-                            <constraint firstItem="Nx4-lf-DUi" firstAttribute="leading" secondItem="ONr-We-qcC" secondAttribute="leading" id="e6C-pR-nxB"/>
-                            <constraint firstItem="Nx4-lf-DUi" firstAttribute="trailing" secondItem="ZZp-L4-n4o" secondAttribute="trailing" id="f6j-yF-guZ"/>
-                            <constraint firstItem="ONr-We-qcC" firstAttribute="centerX" secondItem="dmF-sP-zyh" secondAttribute="centerX" id="gQd-Ir-Mes"/>
+                            <constraint firstItem="ONr-We-qcC" firstAttribute="trailing" secondItem="Nx4-lf-DUi" secondAttribute="trailing" id="fMp-20-sGF"/>
                             <constraint firstItem="ONr-We-qcC" firstAttribute="top" secondItem="Nx4-lf-DUi" secondAttribute="bottom" constant="8" symbolic="YES" id="k5f-3Q-elx"/>
+                            <constraint firstItem="dmF-sP-zyh" firstAttribute="centerX" secondItem="ONr-We-qcC" secondAttribute="centerX" id="kFy-IP-J2p"/>
+                            <constraint firstItem="Nx4-lf-DUi" firstAttribute="leading" secondItem="jfy-yJ-c7h" secondAttribute="leading" constant="16" id="yPC-d0-Utf"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="jfy-yJ-c7h"/>
                     </view>
@@ -206,7 +206,13 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="EMp-81-IWg"/>
                     </view>
-                    <navigationItem key="navigationItem" id="GBJ-bP-QrL"/>
+                    <navigationItem key="navigationItem" id="GBJ-bP-QrL">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="R4S-wj-ghV">
+                            <connections>
+                                <action selector="addNewChatButtonAction:" destination="AmR-gZ-tMC" id="hEd-c4-1Zj"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="tableView" destination="Y2a-vE-yoW" id="QJP-hT-Ba5"/>
                         <segue destination="BYZ-38-t0r" kind="show" identifier="chatSegue" id="ZbS-mk-mPq"/>

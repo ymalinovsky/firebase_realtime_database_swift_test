@@ -20,6 +20,8 @@ class Firebase {
                 print(error!)
             }
             else {
+                self.addNewUserData(userID: email)
+                
                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
                 let chatsNC = storyboard.instantiateViewController(withIdentifier: "chatsNavigationController")
                 currentUser = email
@@ -46,8 +48,19 @@ class Firebase {
     
     func loginAnonymous() {
         Auth.auth().createUser(withEmail: App.testUsername, password: App.testPassword, completion: { (user, error) in
+            self.addNewUserData(userID: App.testUsername)
             self.emailLogin(email: App.testUsername, password: App.testPassword)
         })
+    }
+    
+    func addNewUserData(userID: String) {
+        let messagesDB = Database.database().reference().child("users")
+        
+        messagesDB.child("user").setValue(String(userID)) { (error, ref) in
+            if error != nil {
+                print(error!)
+            }
+        }
     }
     
     func logout() {
@@ -66,7 +79,7 @@ class Firebase {
     }
     
     func setMessage(sender: String, message: String, chatID: Int) {
-        let messagesDB = Database.database().reference().child(String(chatID)).child("messages")
+        let messagesDB = self.getMessagesDatabaseReference(chatID: chatID)
         
         let messageDictionary : NSDictionary = ["sender" : sender, "message" : message]
         
@@ -77,8 +90,12 @@ class Firebase {
         }
     }
     
+    func getMessagesDatabaseReference(chatID: Int) -> DatabaseReference {
+        return Database.database().reference().child("chats").child(String(chatID)).child("messages")
+    }
+    
     func newMessageObserver(chatID: Int) {
-        let chatMessagesDB = Database.database().reference().child(String(chatID)).child("messages")
+        let chatMessagesDB = self.getMessagesDatabaseReference(chatID: chatID)
         
         chatMessagesDB.observe(.childAdded, with: { (snapshot) -> Void in
             if snapshot.hasChildren() {
@@ -101,5 +118,9 @@ class Firebase {
                 }
             }
         })
+    }
+    
+    func addNewChatObserver(chatID: Int) {
+        
     }
 }
