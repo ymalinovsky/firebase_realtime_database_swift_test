@@ -99,18 +99,36 @@ class Firebase {
     }
     
     func getAvailableCurrentUserChatList(userID: String) {
-        let chatsDB = Database.database().reference().child("users").child(userID.addingPercentEncoding(withAllowedCharacters:NSCharacterSet.alphanumerics)!).child("chats")
+        let userDB = Database.database().reference().child("users").child(userID.addingPercentEncoding(withAllowedCharacters:NSCharacterSet.alphanumerics)!)
         
-        chatsDB.observeSingleEvent(of: .value, with: { (snapshot) -> Void in
-            let chats = snapshot.children
+        userDB.observeSingleEvent(of: .value, with: { (snapshot) -> Void in
+            let chats = snapshot.value as! NSDictionary
             
-            for chatData in chats {
-                let chat = chatData as! Dictionary<Int, Bool>
-                print("ATATA!!")
+            for chatsData in chats.dropLast() {
+                let chatData = chatsData.value as! NSArray
+                
+                var chatID = 0
+                for chat in chatData {
+                    let status = chat as? Bool
+                    
+                    if status == true {
+                        let chatsDB = Database.database().reference().child("chats").child(String(describing: chatID))
+                        chatsDB.observeSingleEvent(of: .value, with: { (snapshot) -> Void in
+                            let chatData = snapshot.value as! NSDictionary
+                            
+                            for chat in chatData {
+                                if String(describing: chat.key) == "title" {
+                                    let chatID = Int(snapshot.key)
+                                    let title = String(describing: chat.value)
+                                    print("ATATA!!!")
+                                }
+                            }
+                        })
+                    }
+                    
+                    chatID += 1
+                }
             }
-//            let chatKeys = chats.allKeys
-            
-            print("ATATA!!!")
         })
     }
     
