@@ -13,7 +13,6 @@ class ChatsViewController: UIViewController, UITableViewDelegate, UITableViewDat
 
     @IBOutlet weak var tableView: UITableView!
     
-    var chats = [[Int: String]]()
     var newMessageChatIDs = [Int]()
     
     let chatCellIdentifier = "chatsCell"
@@ -28,15 +27,11 @@ class ChatsViewController: UIViewController, UITableViewDelegate, UITableViewDat
         tableView.dataSource = self
         
         firebase.getAvailableCurrentUserChatList(userID: currentUser)
-        for chatData in chats {
-            for chat in chatData {
-                firebase.newMessageObserver(chatID: chat.key)
-            }
-        }
 
         NotificationCenter.default.addObserver(self, selector: #selector(newMessage), name: .newMessage, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(fromChatVCtoChatsVC), name: .fromChatVCtoChatsVC, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(newChatWasCreated), name: .newChatWasCreated, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(chatsVCTableViewMustBeReload), name: .chatsVCTableViewMustBeReload, object: nil)
     }
 
     @objc func newMessage(notification: NSNotification) {
@@ -79,6 +74,10 @@ class ChatsViewController: UIViewController, UITableViewDelegate, UITableViewDat
         }
     }
     
+    @objc func chatsVCTableViewMustBeReload(notification: NSNotification) {
+        tableView.reloadData()
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         tableView.reloadData()
     }
@@ -103,15 +102,15 @@ class ChatsViewController: UIViewController, UITableViewDelegate, UITableViewDat
     // MARK: UITableViewDataSource
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return chats.count
+        return availableChats.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: chatCellIdentifier)!
         
-        let chatID = chats[indexPath.row].first?.key
+        let chatID = availableChats[indexPath.row].first?.key
         
-        let chatTitle = chats[indexPath.row].first?.value
+        let chatTitle = availableChats[indexPath.row].first?.value
         
         cell.textLabel?.text = chatTitle
         
@@ -125,7 +124,7 @@ class ChatsViewController: UIViewController, UITableViewDelegate, UITableViewDat
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let chatID = chats[indexPath.row].first?.key
+        let chatID = availableChats[indexPath.row].first?.key
         
         newMessageChatIDs = newMessageChatIDs.filter() { $0 != chatID }
         

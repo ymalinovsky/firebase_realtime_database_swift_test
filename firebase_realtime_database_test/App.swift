@@ -17,6 +17,7 @@ extension Notification.Name {
     static let newMessage = Notification.Name("newMessage")
     static let fromChatVCtoChatsVC = Notification.Name("fromChatVCtoChatsVC")
     static let newChatWasCreated = Notification.Name("newChatWasCreated")
+    static let chatsVCTableViewMustBeReload = Notification.Name("chatsVCTableViewMustBeReload")
 }
 
 struct Massage {
@@ -30,3 +31,4 @@ var currentUser = String()
 
 var chatsData: [Int: [Massage]]!
 
+var availableChats = [[Int: String]]()

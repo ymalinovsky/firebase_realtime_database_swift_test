@@ -118,9 +118,13 @@ class Firebase {
                             
                             for chat in chatData {
                                 if String(describing: chat.key) == "title" {
-                                    let chatID = Int(snapshot.key)
+                                    let chatID = Int(snapshot.key)!
                                     let title = String(describing: chat.value)
-                                    print("ATATA!!!")
+                                    
+                                    availableChats.append([chatID: title])
+                                    self.newMessageObserver(chatID: chatID)
+                                    
+                                    NotificationCenter.default.post(name: .chatsVCTableViewMustBeReload, object: nil, userInfo: nil)
                                 }
                             }
                         })
