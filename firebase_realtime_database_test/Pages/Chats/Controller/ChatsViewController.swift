@@ -60,9 +60,9 @@ class ChatsViewController: UIViewController, UITableViewDelegate, UITableViewDat
         if let notificationData = notification.userInfo?.first?.value {
             let createdChatData = notificationData as! [String: String]
             
-            let chatID = Int(createdChatData["chatID"]!)
-            let title = createdChatData["title"]
-            let owner = createdChatData["owner"]
+            let chatID = Int(createdChatData["chatID"]!)!
+            let title = createdChatData["title"]!
+            let owner = createdChatData["owner"]!
             
             if owner == currentUser {
 //                firebase.addNewChatToUser(userID: owner, chatID: chatID, status: true)

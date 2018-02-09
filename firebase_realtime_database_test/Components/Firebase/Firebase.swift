@@ -84,9 +84,21 @@ class Firebase {
         let chatDB = Database.database().reference().child("chats")
         chatDB.observe(.childAdded, with: { (snapshot) -> Void in
             let userDB = Database.database().reference().child("users").child(currentUser.addingPercentEncoding(withAllowedCharacters:NSCharacterSet.alphanumerics)!).child("chats").child(snapshot.key)
-            userDB.observeSingleEvent(of: .childAdded, with: { (snapshot2) -> Void in
-                if snapshot2.key.isEmpty {
-                    print(snapshot2.key)
+            userDB.observeSingleEvent(of: .value, with: { (snapshot) -> Void in
+                if String(describing: snapshot.value!) == "<null>" {
+                    let chatDB = Database.database().reference().child("chats").child(snapshot.key)
+                    chatDB.observeSingleEvent(of: .value, with: { (snapshot) -> Void in
+                        let chatID = snapshot.key
+                        
+                        let chat = snapshot.value as! NSDictionary
+                        
+                        let titile = String(describing: chat["title"]!)
+//                        let owner = chat["owner"]
+//
+//                        NotificationCenter.default.post(name: .newChatWasCreated, object: nil, userInfo: [chatID: ["chatID": chatID, "title": title, "owner": owner]])
+                        
+                        print("ATATA!!!")
+                    })
                 }
             })
         
