@@ -27,7 +27,8 @@ class ChatsViewController: UIViewController, UITableViewDelegate, UITableViewDat
         tableView.dataSource = self
         
 //        firebase.getAvailableCurrentUserChatList(userID: currentUser)
-        firebase.newChatObserver(userID: currentUser)
+        firebase.newChatObserver()
+        firebase.newUserChatObserver(userID: currentUser)
 
         NotificationCenter.default.addObserver(self, selector: #selector(newMessage), name: .newMessage, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(fromChatVCtoChatsVC), name: .fromChatVCtoChatsVC, object: nil)
@@ -57,16 +58,21 @@ class ChatsViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     @objc func newChatWasCreated(notification: NSNotification) {
         if let notificationData = notification.userInfo?.first?.value {
-            let createdChatData = notificationData as! [String: Any]
+            let createdChatData = notificationData as! [String: String]
             
-            let chatID = createdChatData["chatID"] as! Int
-            let title = createdChatData["title"] as! String
-            let owner = createdChatData["owner"] as! String
+            let chatID = Int(createdChatData["chatID"]!)
+            let title = createdChatData["title"]
+            let owner = createdChatData["owner"]
             
             if owner == currentUser {
-                firebase.addNewChatToUser(userID: owner, chatID: chatID, status: true)
+//                firebase.addNewChatToUser(userID: owner, chatID: chatID, status: true)
             } else {
-                firebase.addNewChatToUser(userID: owner, chatID: chatID, status: false)
+                let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                let assignChatToUserVC = storyboard.instantiateViewController(withIdentifier: "assignChatToUserViewController")
+                
+                present(assignChatToUserVC, animated: true)
+                
+//                firebase.addNewChatToUser(userID: owner, chatID: chatID, status: false)
             }
         }
     }

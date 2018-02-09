@@ -308,7 +308,7 @@
         <!--Assign Chat To User View Controller-->
         <scene sceneID="4Sk-k7-UjL">
             <objects>
-                <viewController id="5PS-eH-EDZ" customClass="AssignChatToUserViewController" customModule="firebase_realtime_database_test" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="assignChatToUserViewController" id="5PS-eH-EDZ" customClass="AssignChatToUserViewController" customModule="firebase_realtime_database_test" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Wcq-ma-UQ3">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

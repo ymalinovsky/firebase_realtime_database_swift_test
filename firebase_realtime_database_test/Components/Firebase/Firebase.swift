@@ -67,17 +67,30 @@ class Firebase {
         let chatsDB = Database.database().reference().child("chats")
         
         chatsDB.observeSingleEvent(of: .value, with: { (snapshot) -> Void in
-            let chats = snapshot.children.allObjects
-            let chatID = chats.count + 1
+            let chatID = snapshot.childrenCount + 1
             
             let chatsDB = Database.database().reference().child("chats").child(String(chatID))
-            chatsDB.child("title").setValue(title.addingPercentEncoding(withAllowedCharacters:NSCharacterSet.alphanumerics)!) { (error, ref) in
+            chatsDB.child("title").setValue(title) { (error, ref) in
                 if error != nil {
                     print(error!)
                 }
                 
-                NotificationCenter.default.post(name: .newChatWasCreated, object: nil, userInfo: [chatID: ["chatID": chatID, "title": title, "owner": currentUser]])
+                NotificationCenter.default.post(name: .newChatWasCreated, object: nil, userInfo: [chatID: ["chatID": String(describing: chatID), "title": title, "owner": currentUser]])
             }
+        })
+    }
+    
+    func newChatObserver() {
+        let chatDB = Database.database().reference().child("chats")
+        chatDB.observe(.childAdded, with: { (snapshot) -> Void in
+            let userDB = Database.database().reference().child("users").child(currentUser.addingPercentEncoding(withAllowedCharacters:NSCharacterSet.alphanumerics)!).child("chats").child(snapshot.key)
+            userDB.observeSingleEvent(of: .childAdded, with: { (snapshot2) -> Void in
+                if snapshot2.key.isEmpty {
+                    print(snapshot2.key)
+                }
+            })
+        
+//            NotificationCenter.default.post(name: .newChatWasCreated, object: nil, userInfo: [chatID: ["chatID": chatID, "title": title, "owner": currentUser]])
         })
     }
     
@@ -91,7 +104,7 @@ class Firebase {
         }
     }
     
-    func newChatObserver(userID: String) {
+    func newUserChatObserver(userID: String) {
         let userDB = Database.database().reference().child("users").child(userID.addingPercentEncoding(withAllowedCharacters:NSCharacterSet.alphanumerics)!).child("chats")
         
         userDB.observe(.childAdded, with: { (snapshot) -> Void in
