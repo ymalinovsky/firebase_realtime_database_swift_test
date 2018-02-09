@@ -70,12 +70,13 @@ class Firebase {
             let chatID = snapshot.childrenCount + 1
             
             let chatsDB = Database.database().reference().child("chats").child(String(chatID))
-            chatsDB.child("title").setValue(title) { (error, ref) in
+            
+            let chatDictionary = ["title" : title, "owner" : currentUser]
+            
+            chatsDB.setValue(chatDictionary) { (error, ref) in
                 if error != nil {
                     print(error!)
                 }
-                
-                NotificationCenter.default.post(name: .newChatWasCreated, object: nil, userInfo: [chatID: ["chatID": String(describing: chatID), "title": title, "owner": currentUser]])
             }
         })
     }
@@ -88,21 +89,16 @@ class Firebase {
                 if String(describing: snapshot.value!) == "<null>" {
                     let chatDB = Database.database().reference().child("chats").child(snapshot.key)
                     chatDB.observeSingleEvent(of: .value, with: { (snapshot) -> Void in
-                        let chatID = snapshot.key
-                        
                         let chat = snapshot.value as! NSDictionary
                         
-                        let titile = String(describing: chat["title"]!)
-//                        let owner = chat["owner"]
-//
-//                        NotificationCenter.default.post(name: .newChatWasCreated, object: nil, userInfo: [chatID: ["chatID": chatID, "title": title, "owner": owner]])
-                        
-                        print("ATATA!!!")
+                        let chatID = snapshot.key
+                        let title = String(describing: chat["title"]!)
+                        let owner = String(describing: chat["owner"]!)
+
+                        NotificationCenter.default.post(name: .newChatWasCreated, object: nil, userInfo: [chatID: ["chatID": chatID, "title": title, "owner": owner]])
                     })
                 }
             })
-        
-//            NotificationCenter.default.post(name: .newChatWasCreated, object: nil, userInfo: [chatID: ["chatID": chatID, "title": title, "owner": currentUser]])
         })
     }
     
@@ -162,7 +158,7 @@ class Firebase {
     func setMessage(sender: String, message: String, chatID: Int) {
         let messagesDB = self.getMessagesDatabaseReference(chatID: chatID)
         
-        let messageDictionary : NSDictionary = ["sender" : sender, "message" : message]
+        let messageDictionary = ["sender" : sender, "message" : message]
         
         messagesDB.child(String(describing: Int(Date().timeIntervalSinceReferenceDate))).setValue(messageDictionary) { (error, ref) in
             if error != nil {

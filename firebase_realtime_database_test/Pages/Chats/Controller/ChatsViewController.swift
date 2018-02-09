@@ -65,7 +65,7 @@ class ChatsViewController: UIViewController, UITableViewDelegate, UITableViewDat
             let owner = createdChatData["owner"]!
             
             if owner == currentUser {
-//                firebase.addNewChatToUser(userID: owner, chatID: chatID, status: true)
+                firebase.addNewChatToUser(userID: owner, chatID: chatID, status: true)
             } else {
                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
                 let assignChatToUserVC = storyboard.instantiateViewController(withIdentifier: "assignChatToUserViewController")
