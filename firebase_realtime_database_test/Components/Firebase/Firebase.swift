@@ -63,17 +63,15 @@ class Firebase {
         }
     }
     
-    func addNewChat() {
+    func addNewChat(title: String) {
         let chatsDB = Database.database().reference().child("chats")
         
         chatsDB.observeSingleEvent(of: .value, with: { (snapshot) -> Void in
             let chats = snapshot.children.allObjects
-            
             let chatID = chats.count + 1
-            let title = "TEST = \(chatID)"
             
             let chatsDB = Database.database().reference().child("chats").child(String(chatID))
-            chatsDB.child("title").setValue(title) { (error, ref) in
+            chatsDB.child("title").setValue(title.addingPercentEncoding(withAllowedCharacters:NSCharacterSet.alphanumerics)!) { (error, ref) in
                 if error != nil {
                     print(error!)
                 }

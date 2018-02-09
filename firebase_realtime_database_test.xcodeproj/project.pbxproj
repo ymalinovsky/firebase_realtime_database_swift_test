@@ -22,6 +22,7 @@
 		9E2A7A7F2028C36C00F7D45E /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E2A7A7E2028C36C00F7D45E /* LoginViewController.swift */; };
 		9E2A7A832028C74300F7D45E /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E2A7A822028C74300F7D45E /* SignInViewController.swift */; };
 		9E2A7A852028C7D400F7D45E /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E2A7A842028C7D400F7D45E /* App.swift */; };
+		9EAFC668202DE34D001BE840 /* AssignChatToUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EAFC667202DE34D001BE840 /* AssignChatToUserViewController.swift */; };
 		9ECE50042029C92000C4DC96 /* Chat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ECE50032029C92000C4DC96 /* Chat.swift */; };
 		9ECE50092029E8BB00C4DC96 /* ChatsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ECE50082029E8BB00C4DC96 /* ChatsViewController.swift */; };
 		A21C939DC374777E6731FDE4 /* Pods_firebase_realtime_database_testTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8BA71F89A517F4B1A1B3BC9A /* Pods_firebase_realtime_database_testTests.framework */; };
@@ -68,6 +69,7 @@
 		9E2A7A7E2028C36C00F7D45E /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		9E2A7A822028C74300F7D45E /* SignInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
 		9E2A7A842028C7D400F7D45E /* App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
+		9EAFC667202DE34D001BE840 /* AssignChatToUserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssignChatToUserViewController.swift; sourceTree = "<group>"; };
 		9ECE50032029C92000C4DC96 /* Chat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chat.swift; sourceTree = "<group>"; };
 		9ECE50082029E8BB00C4DC96 /* ChatsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatsViewController.swift; sourceTree = "<group>"; };
 		A025C033F237869EF6A430EB /* Pods_firebase_realtime_database_test.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_firebase_realtime_database_test.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -178,6 +180,7 @@
 		9E2A7A752028BD7200F7D45E /* Pages */ = {
 			isa = PBXGroup;
 			children = (
+				9EAFC665202DE309001BE840 /* AssignChatToUser */,
 				9E2A7A802028C70F00F7D45E /* SignIn */,
 				9E2A7A7C2028C34500F7D45E /* Login */,
 				9ECE50062029E87800C4DC96 /* Chats */,
@@ -247,6 +250,22 @@
 			isa = PBXGroup;
 			children = (
 				9E2A7A822028C74300F7D45E /* SignInViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		9EAFC665202DE309001BE840 /* AssignChatToUser */ = {
+			isa = PBXGroup;
+			children = (
+				9EAFC666202DE32C001BE840 /* Controller */,
+			);
+			path = AssignChatToUser;
+			sourceTree = "<group>";
+		};
+		9EAFC666202DE32C001BE840 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				9EAFC667202DE34D001BE840 /* AssignChatToUserViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -594,6 +613,7 @@
 				9E2A7A852028C7D400F7D45E /* App.swift in Sources */,
 				9ECE50092029E8BB00C4DC96 /* ChatsViewController.swift in Sources */,
 				9E1E422220286DEE006418BA /* firebase_realtime_database_test.xcdatamodeld in Sources */,
+				9EAFC668202DE34D001BE840 /* AssignChatToUserViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

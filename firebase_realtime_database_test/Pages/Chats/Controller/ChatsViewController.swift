@@ -80,7 +80,49 @@ class ChatsViewController: UIViewController, UITableViewDelegate, UITableViewDat
     }
     
     @IBAction func addNewChatButtonAction(_ sender: UIBarButtonItem) {
-        firebase.addNewChat()
+        let alertController = UIAlertController(title: "Add new chat?", message: nil, preferredStyle: .alert)
+        
+        alertController.addTextField { (textfield: UITextField) in
+            textfield.placeholder = "Title"
+        }
+        
+        alertController.addAction(UIAlertAction(title: "No", style: .cancel))
+        
+        alertController.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action: UIAlertAction!) in
+            if let title = alertController.textFields?.first?.text {
+                if !title.isEmpty {
+                    firebase.addNewChat(title: title)
+                } else {
+                    let alertController = UIAlertController(title: "Chat title can't be empty.", message: nil, preferredStyle: .alert)
+                    alertController.addAction(UIAlertAction(title: "Ok", style: .cancel))
+                    
+                    if UIDevice.current.userInterfaceIdiom == .pad {
+                        alertController.modalPresentationStyle = .popover
+                        self.present(alertController, animated: true, completion: nil)
+                        
+                        if let popoverPresentationController = alertController.popoverPresentationController {
+                            popoverPresentationController.barButtonItem = sender
+                        }
+                    } else {
+                        self.present(alertController, animated: true, completion: nil)
+                    }
+                    
+                }
+                
+            }
+        }))
+        
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            alertController.modalPresentationStyle = .popover
+            present(alertController, animated: true, completion: nil)
+            
+            if let popoverPresentationController = alertController.popoverPresentationController {
+                popoverPresentationController.barButtonItem = sender
+            }
+        } else {
+            present(alertController, animated: true, completion: nil)
+        }
+        
     }
     
     // MARK: - Navigation
