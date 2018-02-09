@@ -20,7 +20,7 @@ class Firebase {
                 print(error!)
             }
             else {
-                self.createNewUserDBField(userID: email)
+                self.addNewUser(userID: email)
                 
                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
                 let chatsNC = storyboard.instantiateViewController(withIdentifier: "chatsNavigationController")
@@ -48,12 +48,12 @@ class Firebase {
     
     func loginAnonymous() {
         Auth.auth().createUser(withEmail: App.testUsername, password: App.testPassword, completion: { (user, error) in
-            self.createNewUserDBField(userID: App.testUsername)
+            self.addNewUser(userID: App.testUsername)
             self.emailLogin(email: App.testUsername, password: App.testPassword)
         })
     }
     
-    func createNewUserDBField(userID: String) {
+    func addNewUser(userID: String) {
         let userDB = Database.database().reference().child("users").child(userID.addingPercentEncoding(withAllowedCharacters:NSCharacterSet.alphanumerics)!)
         
         userDB.child("id").setValue(userID) { (error, ref) in
