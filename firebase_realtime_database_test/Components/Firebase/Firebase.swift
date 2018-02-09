@@ -63,6 +63,26 @@ class Firebase {
         }
     }
     
+    func addNewChat() {
+        let chatsDB = Database.database().reference().child("chats")
+        
+        chatsDB.observeSingleEvent(of: .value, with: { (snapshot) -> Void in
+            let chats = snapshot.children.allObjects
+            
+            let chatID = chats.count + 1
+            let title = "TEST = \(chatID)"
+            
+            let chatsDB = Database.database().reference().child("chats").child(String(chatID))
+            chatsDB.child("title").setValue(title) { (error, ref) in
+                if error != nil {
+                    print(error!)
+                }
+                
+                NotificationCenter.default.post(name: .newChatWasCreated, object: nil, userInfo: [chatID: ["chatID": chatID, "title": title, "owner": currentUser]])
+            }
+        })
+    }
+    
     func addNewChatToUser(userID: String, chatID: Int, status: Bool) {
         let userDB = Database.database().reference().child("users").child(userID.addingPercentEncoding(withAllowedCharacters:NSCharacterSet.alphanumerics)!).child("chats")
         
@@ -73,65 +93,30 @@ class Firebase {
         }
     }
     
-    func addNewChatObserverSingleEvent() {
-        let chatsDB = Database.database().reference().child("chats")
+    func newChatObserver(userID: String) {
+        let userDB = Database.database().reference().child("users").child(userID.addingPercentEncoding(withAllowedCharacters:NSCharacterSet.alphanumerics)!).child("chats")
         
-        chatsDB.observeSingleEvent(of: .value, with: { (snapshot) -> Void in
-            let chats = snapshot.children.allObjects
+        userDB.observe(.childAdded, with: { (snapshot) -> Void in
+            let chatID = Int(snapshot.key)!
+            let status = snapshot.value! as? Bool
             
-            let chatID = chats.count + 1
-            let title = "TEST = \(chatID)"
-            
-            self.createNewChatDBField(chatID: chatID, title: title)
-        })
-    }
-    
-    func createNewChatDBField(chatID: Int, title: String) {
-        let chatsDB = Database.database().reference().child("chats").child(String(chatID))
-        
-        chatsDB.child("title").setValue(title) { (error, ref) in
-            if error != nil {
-                print(error!)
-            }
-            
-            NotificationCenter.default.post(name: .newChatWasCreated, object: nil, userInfo: [chatID: ["chatID": chatID, "title": title, "owner": currentUser]])
-        }
-    }
-    
-    func getAvailableCurrentUserChatList(userID: String) {
-        let userDB = Database.database().reference().child("users").child(userID.addingPercentEncoding(withAllowedCharacters:NSCharacterSet.alphanumerics)!)
-        
-        userDB.observeSingleEvent(of: .value, with: { (snapshot) -> Void in
-            let chats = snapshot.value as! NSDictionary
-            
-            for chatsData in chats.dropLast() {
-                let chatData = chatsData.value as! NSArray
-                
-                var chatID = 0
-                for chat in chatData {
-                    let status = chat as? Bool
+            if status == true {
+                let chatsDB = Database.database().reference().child("chats").child(String(describing: chatID))
+                chatsDB.observeSingleEvent(of: .value, with: { (snapshot) -> Void in
+                    let chatData = snapshot.value as! NSDictionary
                     
-                    if status == true {
-                        let chatsDB = Database.database().reference().child("chats").child(String(describing: chatID))
-                        chatsDB.observeSingleEvent(of: .value, with: { (snapshot) -> Void in
-                            let chatData = snapshot.value as! NSDictionary
+                    for chat in chatData {
+                        if String(describing: chat.key) == "title" {
+                            let chatID = Int(snapshot.key)!
+                            let title = String(describing: chat.value)
                             
-                            for chat in chatData {
-                                if String(describing: chat.key) == "title" {
-                                    let chatID = Int(snapshot.key)!
-                                    let title = String(describing: chat.value)
-                                    
-                                    availableChats.append([chatID: title])
-                                    self.newMessageObserver(chatID: chatID)
-                                    
-                                    NotificationCenter.default.post(name: .chatsVCTableViewMustBeReload, object: nil, userInfo: nil)
-                                }
-                            }
-                        })
+                            availableChats.append([chatID: title])
+                            self.newMessageObserver(chatID: chatID)
+                            
+                            NotificationCenter.default.post(name: .chatsVCTableViewMustBeReload, object: nil, userInfo: nil)
+                        }
                     }
-                    
-                    chatID += 1
-                }
+                })
             }
         })
     }

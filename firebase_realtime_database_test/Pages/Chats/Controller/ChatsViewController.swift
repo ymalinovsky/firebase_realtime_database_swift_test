@@ -26,7 +26,8 @@ class ChatsViewController: UIViewController, UITableViewDelegate, UITableViewDat
         tableView.delegate = self
         tableView.dataSource = self
         
-        firebase.getAvailableCurrentUserChatList(userID: currentUser)
+//        firebase.getAvailableCurrentUserChatList(userID: currentUser)
+        firebase.newChatObserver(userID: currentUser)
 
         NotificationCenter.default.addObserver(self, selector: #selector(newMessage), name: .newMessage, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(fromChatVCtoChatsVC), name: .fromChatVCtoChatsVC, object: nil)
@@ -63,10 +64,6 @@ class ChatsViewController: UIViewController, UITableViewDelegate, UITableViewDat
             let owner = createdChatData["owner"] as! String
             
             if owner == currentUser {
-//                chats.append([chatID: title])
-//                tableView.reloadData()
-                
-                firebase.newMessageObserver(chatID: chatID)
                 firebase.addNewChatToUser(userID: owner, chatID: chatID, status: true)
             } else {
                 firebase.addNewChatToUser(userID: owner, chatID: chatID, status: false)
@@ -83,7 +80,7 @@ class ChatsViewController: UIViewController, UITableViewDelegate, UITableViewDat
     }
     
     @IBAction func addNewChatButtonAction(_ sender: UIBarButtonItem) {
-        firebase.addNewChatObserverSingleEvent()
+        firebase.addNewChat()
     }
     
     // MARK: - Navigation
