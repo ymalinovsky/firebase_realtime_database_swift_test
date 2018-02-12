@@ -13,7 +13,9 @@ class ChatsViewController: UIViewController, UITableViewDelegate, UITableViewDat
 
     @IBOutlet weak var tableView: UITableView!
     
-    var newMessageChatIDs = [Int]()
+    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+    
+    var newMessageChatIDs: [NewMessageChatID]!
     
     let chatCellIdentifier = "chatsCell"
     let chatSegueIdentifier = "chatSegue"
@@ -25,6 +27,8 @@ class ChatsViewController: UIViewController, UITableViewDelegate, UITableViewDat
 
         tableView.delegate = self
         tableView.dataSource = self
+        
+        newMessageChatIDs = getNewMessageChatIDsFromCoreData(appDelegate: appDelegate)
         
         firebase.newChatObserver()
         firebase.newUserChatObserver(userID: currentUser)
@@ -40,8 +44,10 @@ class ChatsViewController: UIViewController, UITableViewDelegate, UITableViewDat
             for notification in notificationData as! [Int: DataSnapshot] {
                 let chatID = notification.key
                 
-                if !newMessageChatIDs.contains(where: { $0 == chatID }) {
-                    newMessageChatIDs.append(chatID)
+                if !newMessageChatIDs.contains(where: { $0.chatID == chatID }) {
+                    newMessageChatIDs.append(NewMessageChatID(chatID: chatID))
+                    setNewMessageChatIDToCoreData(appDelegate: appDelegate, chatID: chatID)
+                    
                     tableView.reloadData()
                 }
             }
@@ -51,7 +57,8 @@ class ChatsViewController: UIViewController, UITableViewDelegate, UITableViewDat
     @objc func fromChatVCtoChatsVC(notification: NSNotification) {
         if let notificationData = notification.userInfo?.first?.value {
             let prevChatID = notificationData as! Int
-            newMessageChatIDs = newMessageChatIDs.filter() { $0 != prevChatID }
+            newMessageChatIDs = newMessageChatIDs.filter() { $0.chatID != prevChatID }
+            removeNewMessageChatIDFromCoreData(appDelegate: appDelegate, chatID: prevChatID)
         }
     }
     
@@ -160,7 +167,7 @@ class ChatsViewController: UIViewController, UITableViewDelegate, UITableViewDat
         
         cell.textLabel?.text = chatTitle
         
-        if newMessageChatIDs.contains(where: { $0 == chatID }) {
+        if newMessageChatIDs.contains(where: { $0.chatID == chatID }) {
             cell.accessoryType = .checkmark
         } else {
             cell.accessoryType = .none
@@ -170,11 +177,12 @@ class ChatsViewController: UIViewController, UITableViewDelegate, UITableViewDat
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let chatID = availableChats[indexPath.row].first?.key
-        
-        newMessageChatIDs = newMessageChatIDs.filter() { $0 != chatID }
-        
-        selectedIndexRow = chatID
-        performSegue(withIdentifier: chatSegueIdentifier, sender: self)
+        if let chatID = availableChats[indexPath.row].first?.key {
+            newMessageChatIDs = newMessageChatIDs.filter() { $0.chatID != chatID }
+            removeNewMessageChatIDFromCoreData(appDelegate: appDelegate, chatID: chatID)
+            
+            selectedIndexRow = chatID
+            performSegue(withIdentifier: chatSegueIdentifier, sender: self)
+        }
     }
 }
