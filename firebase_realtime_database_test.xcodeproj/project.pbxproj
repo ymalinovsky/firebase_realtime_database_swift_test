@@ -22,7 +22,6 @@
 		9E2A7A7F2028C36C00F7D45E /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E2A7A7E2028C36C00F7D45E /* LoginViewController.swift */; };
 		9E2A7A832028C74300F7D45E /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E2A7A822028C74300F7D45E /* SignInViewController.swift */; };
 		9E2A7A852028C7D400F7D45E /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E2A7A842028C7D400F7D45E /* App.swift */; };
-		9E4147FA2031AF1D00000780 /* AppData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E4147F92031AF1D00000780 /* AppData.swift */; };
 		9E4147FD2031B16800000780 /* NewMessageChatIDs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E4147FC2031B16800000780 /* NewMessageChatIDs.swift */; };
 		9EAFC668202DE34D001BE840 /* AssignChatToUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EAFC667202DE34D001BE840 /* AssignChatToUserViewController.swift */; };
 		9ECE50042029C92000C4DC96 /* Chat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ECE50032029C92000C4DC96 /* Chat.swift */; };
@@ -71,7 +70,6 @@
 		9E2A7A7E2028C36C00F7D45E /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		9E2A7A822028C74300F7D45E /* SignInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
 		9E2A7A842028C7D400F7D45E /* App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
-		9E4147F92031AF1D00000780 /* AppData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppData.swift; sourceTree = "<group>"; };
 		9E4147FC2031B16800000780 /* NewMessageChatIDs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewMessageChatIDs.swift; sourceTree = "<group>"; };
 		9EAFC667202DE34D001BE840 /* AssignChatToUserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssignChatToUserViewController.swift; sourceTree = "<group>"; };
 		9ECE50032029C92000C4DC96 /* Chat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chat.swift; sourceTree = "<group>"; };
@@ -149,7 +147,6 @@
 		9E1E421820286DEE006418BA /* firebase_realtime_database_test */ = {
 			isa = PBXGroup;
 			children = (
-				9E4147F82031AEEE00000780 /* AppData */,
 				9E2A7A782028BDEF00F7D45E /* Components */,
 				9E2A7A752028BD7200F7D45E /* Pages */,
 				9E1E421920286DEE006418BA /* AppDelegate.swift */,
@@ -257,14 +254,6 @@
 				9E2A7A822028C74300F7D45E /* SignInViewController.swift */,
 			);
 			path = Controller;
-			sourceTree = "<group>";
-		};
-		9E4147F82031AEEE00000780 /* AppData */ = {
-			isa = PBXGroup;
-			children = (
-				9E4147F92031AF1D00000780 /* AppData.swift */,
-			);
-			path = AppData;
 			sourceTree = "<group>";
 		};
 		9E4147FB2031B15500000780 /* Model */ = {
@@ -630,7 +619,6 @@
 				9E1E421A20286DEE006418BA /* AppDelegate.swift in Sources */,
 				9E2A7A832028C74300F7D45E /* SignInViewController.swift in Sources */,
 				9E2A7A7B2028BE0300F7D45E /* Firebase.swift in Sources */,
-				9E4147FA2031AF1D00000780 /* AppData.swift in Sources */,
 				9E2A7A7F2028C36C00F7D45E /* LoginViewController.swift in Sources */,
 				9ECE50042029C92000C4DC96 /* Chat.swift in Sources */,
 				9E2A7A852028C7D400F7D45E /* App.swift in Sources */,

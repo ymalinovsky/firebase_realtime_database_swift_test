@@ -15,7 +15,7 @@ class ChatsViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
     
-    var newMessageChatIDs: [NewMessageChatID]!
+    var newMessageChatIDs = [NewMessageChatID]()
     
     let chatCellIdentifier = "chatsCell"
     let chatSegueIdentifier = "chatSegue"
@@ -27,8 +27,6 @@ class ChatsViewController: UIViewController, UITableViewDelegate, UITableViewDat
 
         tableView.delegate = self
         tableView.dataSource = self
-        
-        newMessageChatIDs = getNewMessageChatIDsFromCoreData(appDelegate: appDelegate)
         
         firebase.newChatObserver()
         firebase.newUserChatObserver(userID: currentUser)
@@ -57,7 +55,6 @@ class ChatsViewController: UIViewController, UITableViewDelegate, UITableViewDat
         if let notificationData = notification.userInfo?.first?.value {
             let prevChatID = notificationData as! Int
             newMessageChatIDs = newMessageChatIDs.filter() { $0.chatID != prevChatID }
-            removeNewMessageChatIDFromCoreData(appDelegate: appDelegate, chatID: prevChatID)
         }
     }
     
@@ -178,7 +175,6 @@ class ChatsViewController: UIViewController, UITableViewDelegate, UITableViewDat
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let chatID = availableChats[indexPath.row].first?.key {
             newMessageChatIDs = newMessageChatIDs.filter() { $0.chatID != chatID }
-            removeNewMessageChatIDFromCoreData(appDelegate: appDelegate, chatID: chatID)
             
             selectedIndexRow = chatID
             performSegue(withIdentifier: chatSegueIdentifier, sender: self)

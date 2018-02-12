@@ -1,9 +1,4 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="13772" systemVersion="17D47" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
-    <entity name="NewMessage" representedClassName="NewMessage" syncable="YES" codeGenerationType="class">
-        <attribute name="newMessageChatID" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
-    </entity>
-    <elements>
-        <element name="NewMessage" positionX="-63" positionY="-18" width="128" height="60"/>
-    </elements>
+    <elements/>
 </model>
