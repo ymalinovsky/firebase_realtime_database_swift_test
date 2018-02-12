@@ -37,6 +37,8 @@ class Firebase {
                 print(error!)
             }
             else {
+                self.addNewUser(userID: email)
+                
                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
                 let chatsNC = storyboard.instantiateViewController(withIdentifier: "chatsNavigationController")
                 currentUser = email
