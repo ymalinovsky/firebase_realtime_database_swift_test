@@ -15,7 +15,10 @@ class ChatsViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
     
+    let helper = Chats()
+    
     var newMessageChatIDs = [NewMessageChatID]()
+    var assignChatToUserQueue = [AssignChatToUserQueue]()
     
     let chatCellIdentifier = "chatsCell"
     let chatSegueIdentifier = "chatSegue"
@@ -69,14 +72,8 @@ class ChatsViewController: UIViewController, UITableViewDelegate, UITableViewDat
             if owner == currentUser {
                 firebase.addNewChatToUser(userID: owner, chatID: chatID, status: true)
             } else {
-                let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                let assignChatToUserVC = storyboard.instantiateViewController(withIdentifier: "assignChatToUserViewController") as! AssignChatToUserViewController
-                
-                assignChatToUserVC.chatID = chatID
-                assignChatToUserVC.chatTitle = title
-                assignChatToUserVC.chatOwner = owner
-                
-                present(assignChatToUserVC, animated: true)
+                assignChatToUserQueue.append(AssignChatToUserQueue(chatID: chatID, title: title, owner: owner))
+                helper.presentAssignChatToUserViewController(controller: self, chatID: chatID, title: title, owner: owner)
             }
         }
     }
@@ -86,6 +83,12 @@ class ChatsViewController: UIViewController, UITableViewDelegate, UITableViewDat
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        if assignChatToUserQueue.count > 0 {
+            if let chatID = assignChatToUserQueue.first?.chatID, let title = assignChatToUserQueue.first?.title, let owner = assignChatToUserQueue.first?.owner {
+                helper.presentAssignChatToUserViewController(controller: self, chatID: chatID, title: title, owner: owner)
+            }
+        }
+        
         tableView.reloadData()
     }
     
@@ -116,9 +119,7 @@ class ChatsViewController: UIViewController, UITableViewDelegate, UITableViewDat
                     } else {
                         self.present(alertController, animated: true, completion: nil)
                     }
-                    
                 }
-                
             }
         }))
         

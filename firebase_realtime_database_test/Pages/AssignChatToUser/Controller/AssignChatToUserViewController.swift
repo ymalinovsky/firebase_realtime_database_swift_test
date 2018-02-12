@@ -14,6 +14,8 @@ class AssignChatToUserViewController: UIViewController {
     var chatTitle: String!
     var chatOwner: String!
     
+    var chatsVC: ChatsViewController!
+    
     @IBOutlet weak var titleLabel: UILabel!
     
     override func viewDidLoad() {
@@ -26,11 +28,13 @@ class AssignChatToUserViewController: UIViewController {
 
     @IBAction func yesButtonAction(_ sender: UIButton) {
         firebase.addNewChatToUser(userID: currentUser, chatID: chatID, status: true)
+        chatsVC.assignChatToUserQueue = chatsVC.assignChatToUserQueue.filter() { $0.chatID != chatID }
         dismiss(animated: true)
     }
     
     @IBAction func noButtonAction(_ sender: UIButton) {
         firebase.addNewChatToUser(userID: currentUser, chatID: chatID, status: false)
+        chatsVC.assignChatToUserQueue = chatsVC.assignChatToUserQueue.filter() { $0.chatID != chatID }
         dismiss(animated: true)
     }
     
