@@ -149,8 +149,7 @@ class Firebase {
             currentUser = String()
             
             self.chatVC.present(homepageNC, animated: true)
-        }
-        catch {
+        } catch {
             print(error)
         }
     }

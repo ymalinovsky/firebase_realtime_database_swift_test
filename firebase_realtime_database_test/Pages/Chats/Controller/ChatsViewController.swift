@@ -26,7 +26,6 @@ class ChatsViewController: UIViewController, UITableViewDelegate, UITableViewDat
         tableView.delegate = self
         tableView.dataSource = self
         
-//        firebase.getAvailableCurrentUserChatList(userID: currentUser)
         firebase.newChatObserver()
         firebase.newUserChatObserver(userID: currentUser)
 
@@ -68,11 +67,13 @@ class ChatsViewController: UIViewController, UITableViewDelegate, UITableViewDat
                 firebase.addNewChatToUser(userID: owner, chatID: chatID, status: true)
             } else {
                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                let assignChatToUserVC = storyboard.instantiateViewController(withIdentifier: "assignChatToUserViewController")
+                let assignChatToUserVC = storyboard.instantiateViewController(withIdentifier: "assignChatToUserViewController") as! AssignChatToUserViewController
+                
+                assignChatToUserVC.chatID = chatID
+                assignChatToUserVC.chatTitle = title
+                assignChatToUserVC.chatOwner = owner
                 
                 present(assignChatToUserVC, animated: true)
-                
-//                firebase.addNewChatToUser(userID: owner, chatID: chatID, status: false)
             }
         }
     }

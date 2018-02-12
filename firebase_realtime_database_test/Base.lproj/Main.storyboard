@@ -312,13 +312,53 @@
                     <view key="view" contentMode="scaleToFill" id="Wcq-ma-UQ3">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="J0Z-YR-V9Y">
+                                <rect key="frame" x="50" y="269" width="46" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="46" id="fcV-Qt-XcK"/>
+                                </constraints>
+                                <state key="normal" title="YES"/>
+                                <connections>
+                                    <action selector="yesButtonAction:" destination="5PS-eH-EDZ" eventType="touchUpInside" id="nmP-b6-Gg6"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yUa-jv-V9c">
+                                <rect key="frame" x="224" y="269" width="46" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="46" id="zSJ-5d-rmp"/>
+                                </constraints>
+                                <state key="normal" title="NO"/>
+                                <connections>
+                                    <action selector="noButtonAction:" destination="5PS-eH-EDZ" eventType="touchUpInside" id="5e8-CK-8Wf"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="J6n-E1-KbV">
+                                <rect key="frame" x="16" y="195" width="288" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="J0Z-YR-V9Y" firstAttribute="baseline" secondItem="yUa-jv-V9c" secondAttribute="baseline" id="9dq-bT-zwJ"/>
+                            <constraint firstItem="176-qE-5Ex" firstAttribute="trailing" secondItem="yUa-jv-V9c" secondAttribute="trailing" constant="50" id="QLX-Kp-ntL"/>
+                            <constraint firstItem="J6n-E1-KbV" firstAttribute="trailing" secondItem="Wcq-ma-UQ3" secondAttribute="trailingMargin" id="QT0-rC-g6W"/>
+                            <constraint firstItem="J0Z-YR-V9Y" firstAttribute="centerY" secondItem="Wcq-ma-UQ3" secondAttribute="centerY" id="cTa-z2-k1g"/>
+                            <constraint firstItem="J6n-E1-KbV" firstAttribute="top" secondItem="176-qE-5Ex" secondAttribute="top" constant="175" id="cu3-in-A5H"/>
+                            <constraint firstItem="J6n-E1-KbV" firstAttribute="leading" secondItem="Wcq-ma-UQ3" secondAttribute="leadingMargin" id="dti-JG-Kze"/>
+                            <constraint firstItem="J0Z-YR-V9Y" firstAttribute="leading" secondItem="176-qE-5Ex" secondAttribute="leading" constant="50" id="eUM-uS-RJB"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="176-qE-5Ex"/>
                     </view>
+                    <connections>
+                        <outlet property="titleLabel" destination="J6n-E1-KbV" id="RfK-N8-CYI"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NLa-VU-YBh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1125" y="1565"/>
+            <point key="canvasLocation" x="-1125" y="1564.4366197183099"/>
         </scene>
     </scenes>
 </document>
