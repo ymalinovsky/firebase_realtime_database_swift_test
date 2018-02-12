@@ -179,6 +179,10 @@ class Firebase {
             if snapshot.hasChildren() {
                 let message = snapshot.value as! NSDictionary
                 if let sender = message["sender"], let message = message["message"] {
+                    if String(describing: sender) != currentUser {
+                        chatMessagesDB.child(snapshot.key).removeValue()
+                    }
+                    
                     if chatsData != nil {
                         if var chatMassages = chatsData[chatID] {
                             let massage = Massage(sender: String(describing: sender), message: String(describing: message))

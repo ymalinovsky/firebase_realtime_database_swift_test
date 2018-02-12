@@ -46,7 +46,6 @@ class ChatsViewController: UIViewController, UITableViewDelegate, UITableViewDat
                 
                 if !newMessageChatIDs.contains(where: { $0.chatID == chatID }) {
                     newMessageChatIDs.append(NewMessageChatID(chatID: chatID))
-                    setNewMessageChatIDToCoreData(appDelegate: appDelegate, chatID: chatID)
                     
                     tableView.reloadData()
                 }
