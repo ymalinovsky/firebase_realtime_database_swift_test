@@ -73,6 +73,13 @@ class ChatsViewController: UIViewController, UITableViewDelegate, UITableViewDat
                 firebase.addNewChatToUser(userID: owner, chatID: chatID, status: true)
             } else {
                 assignChatToUserQueue.append(AssignChatToUserQueue(chatID: chatID, title: title, owner: owner))
+                
+                if let topVC = UIApplication.topViewController() {
+                    let topVCName = NSStringFromClass(topVC.classForCoder).components(separatedBy: ".").last!
+                    if topVCName == "ChatsViewController" {
+                        helper.presentAssignChatToUserViewController(controller: self, chatID: chatID, title: title, owner: owner)
+                    }
+                }
             }
         }
     }

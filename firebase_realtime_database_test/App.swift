@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 struct App {
     static let testUsername = "test@test.com"
@@ -18,6 +19,23 @@ extension Notification.Name {
     static let fromChatVCtoChatsVC = Notification.Name("fromChatVCtoChatsVC")
     static let newChatWasCreated = Notification.Name("newChatWasCreated")
     static let chatsVCTableViewMustBeReload = Notification.Name("chatsVCTableViewMustBeReload")
+}
+
+extension UIApplication {
+    class func topViewController(base: UIViewController? = UIApplication.shared.keyWindow?.rootViewController) -> UIViewController? {
+        if let nav = base as? UINavigationController {
+            return topViewController(base: nav.visibleViewController)
+        }
+        if let tab = base as? UITabBarController {
+            if let selected = tab.selectedViewController {
+                return topViewController(base: selected)
+            }
+        }
+        if let presented = base?.presentedViewController {
+            return topViewController(base: presented)
+        }
+        return base
+    }
 }
 
 struct Massage {
