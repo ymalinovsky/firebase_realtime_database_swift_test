@@ -21,4 +21,16 @@ class Chats {
         
         controller.present(assignChatToUserVC, animated: true)
     }
+    
+    func presentAssignChatToUserViewControllerIfNeeded(controller: ChatsViewController) {
+        if controller.assignChatToUserQueue.count > 0 {
+            if let chatInQueue = controller.assignChatToUserQueue.last {
+                let chatID = chatInQueue.chatID
+                let title = chatInQueue.title
+                let owner = chatInQueue.owner
+                
+                self.presentAssignChatToUserViewController(controller: controller, chatID: chatID, title: title, owner: owner)
+            }
+        }
+    }
 }

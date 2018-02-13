@@ -89,11 +89,7 @@ class ChatsViewController: UIViewController, UITableViewDelegate, UITableViewDat
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        if assignChatToUserQueue.count > 0 {
-            if let chatID = assignChatToUserQueue.first?.chatID, let title = assignChatToUserQueue.first?.title, let owner = assignChatToUserQueue.first?.owner {
-                helper.presentAssignChatToUserViewController(controller: self, chatID: chatID, title: title, owner: owner)
-            }
-        }
+        helper.presentAssignChatToUserViewControllerIfNeeded(controller: self)
         
         tableView.reloadData()
     }
