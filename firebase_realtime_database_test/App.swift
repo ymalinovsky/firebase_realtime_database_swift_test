@@ -19,6 +19,7 @@ extension Notification.Name {
     static let fromChatVCtoChatsVC = Notification.Name("fromChatVCtoChatsVC")
     static let newChatWasCreated = Notification.Name("newChatWasCreated")
     static let chatsVCTableViewMustBeReload = Notification.Name("chatsVCTableViewMustBeReload")
+    static let presentAssignChatToUserOnChatsAlertController = Notification.Name("presentAssignChatToUserOnChatsAlertController")
 }
 
 extension UIApplication {

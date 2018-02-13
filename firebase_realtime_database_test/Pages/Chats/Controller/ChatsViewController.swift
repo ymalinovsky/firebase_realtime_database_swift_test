@@ -77,7 +77,9 @@ class ChatsViewController: UIViewController, UITableViewDelegate, UITableViewDat
                 if let topVC = UIApplication.topViewController() {
                     let topVCName = NSStringFromClass(topVC.classForCoder).components(separatedBy: ".").last!
                     if topVCName == "ChatsViewController" {
-                        helper.presentAssignChatToUserViewController(controller: self, chatID: chatID, title: title, owner: owner)
+                        self.helper.presentAssignChatToUserViewController(controller: self, chatID: chatID, title: title, owner: owner)
+                    } else if topVCName == "ChatsAlertController" {
+                        NotificationCenter.default.post(name: .presentAssignChatToUserOnChatsAlertController, object: nil, userInfo: [chatID: ["chatID": String(describing: chatID), "title": title, "owner": owner]])
                     }
                 }
             }
@@ -95,7 +97,8 @@ class ChatsViewController: UIViewController, UITableViewDelegate, UITableViewDat
     }
     
     @IBAction func addNewChatButtonAction(_ sender: UIBarButtonItem) {
-        let alertController = UIAlertController(title: "Add new chat?", message: nil, preferredStyle: .alert)
+        let alertController = ChatsAlertController(title: "Add new chat?", message: nil, preferredStyle: .alert)
+        alertController.chatsVC = self
         
         alertController.addTextField { (textfield: UITextField) in
             textfield.placeholder = "Title"

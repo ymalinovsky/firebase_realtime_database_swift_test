@@ -25,6 +25,7 @@
 		9E4147FD2031B16800000780 /* NewMessageChatIDs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E4147FC2031B16800000780 /* NewMessageChatIDs.swift */; };
 		9E4148022031E4F300000780 /* AssignChatToUserQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E4148012031E4F300000780 /* AssignChatToUserQueue.swift */; };
 		9E4148062031EA3400000780 /* Chats.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E4148052031EA3400000780 /* Chats.swift */; };
+		9E98EF7C203318E700F9C6A5 /* ChatsAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E98EF7B203318E700F9C6A5 /* ChatsAlertController.swift */; };
 		9EAFC668202DE34D001BE840 /* AssignChatToUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EAFC667202DE34D001BE840 /* AssignChatToUserViewController.swift */; };
 		9ECE50042029C92000C4DC96 /* Chat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ECE50032029C92000C4DC96 /* Chat.swift */; };
 		9ECE50092029E8BB00C4DC96 /* ChatsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ECE50082029E8BB00C4DC96 /* ChatsViewController.swift */; };
@@ -75,6 +76,7 @@
 		9E4147FC2031B16800000780 /* NewMessageChatIDs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewMessageChatIDs.swift; sourceTree = "<group>"; };
 		9E4148012031E4F300000780 /* AssignChatToUserQueue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssignChatToUserQueue.swift; sourceTree = "<group>"; };
 		9E4148052031EA3400000780 /* Chats.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chats.swift; sourceTree = "<group>"; };
+		9E98EF7B203318E700F9C6A5 /* ChatsAlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatsAlertController.swift; sourceTree = "<group>"; };
 		9EAFC667202DE34D001BE840 /* AssignChatToUserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssignChatToUserViewController.swift; sourceTree = "<group>"; };
 		9ECE50032029C92000C4DC96 /* Chat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chat.swift; sourceTree = "<group>"; };
 		9ECE50082029E8BB00C4DC96 /* ChatsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatsViewController.swift; sourceTree = "<group>"; };
@@ -315,6 +317,7 @@
 			isa = PBXGroup;
 			children = (
 				9ECE50082029E8BB00C4DC96 /* ChatsViewController.swift */,
+				9E98EF7B203318E700F9C6A5 /* ChatsAlertController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -637,6 +640,7 @@
 				9E2A7A7B2028BE0300F7D45E /* Firebase.swift in Sources */,
 				9E2A7A7F2028C36C00F7D45E /* LoginViewController.swift in Sources */,
 				9ECE50042029C92000C4DC96 /* Chat.swift in Sources */,
+				9E98EF7C203318E700F9C6A5 /* ChatsAlertController.swift in Sources */,
 				9E2A7A852028C7D400F7D45E /* App.swift in Sources */,
 				9ECE50092029E8BB00C4DC96 /* ChatsViewController.swift in Sources */,
 				9E4147FD2031B16800000780 /* NewMessageChatIDs.swift in Sources */,
